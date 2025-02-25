@@ -6,4 +6,4 @@
 | Arjon Sadikaj            | N         |            |       |                       |                  |
 
 
-**Discord Chat/Server Invite :** [https://discord.gg/K9762ZBf]
+**Discord Chat/Server Invite :** [https://discord.gg/gAjJyk3q2v]
