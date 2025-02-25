@@ -4,3 +4,6 @@
 | Noah Harrison           | N         | 219562719            | nh55@my.yorku.ca       | York Email                      | patchthefat                  |
 | Isha Hanchate          | N         | 219448133            | ishah28@my.yorku.ca       | York Email                      | 4everr41n                  |
 | Arjon Sadikaj            | N         |            |       |                       |                  |
+
+
+**Discord Chat/Server Invite :** [https://discord.gg/K9762ZBf]
