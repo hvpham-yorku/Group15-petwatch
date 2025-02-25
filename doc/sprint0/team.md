@@ -17,6 +17,6 @@
 | Full Name | Section | Student ID | Email | Best Way to Contact  | Discord Username |
 |-----------|---------|------------|-------|----------------------|------------------|
 |           |         |            |       |                      |                  |
-|           |         |            |       |                      |                  |
+| Noah Harrison           | N         | 219562719            | nh55@my.yorku.ca       | York Email                      | patchthefat                  |
 |           |         |            |       |                      |                  |
 |           |         |            |       |                      |                  |
