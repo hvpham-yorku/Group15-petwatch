@@ -19,9 +19,3 @@ Project Backlog - User stories:
 18. As a site admin, I need to have control over user and account activity, so that I can monitor users’ behaviour on the app.
 19. As a site admin, I need to be able to ban or remove users, so that old or malicious accounts are removed.
 20. As a site admin, I want to have access to reviews, so that I can follow up the poster and get additional information about the customer/pet sitter.
-
-18. As a site admin, I want to have access to all users’ information, so that I can .
-19. As a site admin, I want to have control over user and account activity, so that I can monitor users’ behaviour on the app.
-20. As a site admin, I want to be able to ban or remove users, so that old or malicious accounts are removed.
-21. As a site admin, I want to have access to reviews, so that I can follow up the poster and get additional information about the customer/pet sitter.
-
