@@ -15,8 +15,13 @@ Project Backlog - User stories:
 14. As a pet sitter, I want to message customers who’ve requested me, so that I can confirm and discuss specifics.
 15. As a pet sitter, I want to have access to the customer’s pet(s) information, so that I am aware of the job requirements.
 16. As a pet sitter, I want to be able to provide feedback on a pet sitting experience, so that I can report any concerns or comments to the admin for further action.
-17. As a site admin, I want to have access to all users’ information, so that I can .
-18. As a site admin, I want to have control over user and account activity, so that I can monitor users’ behaviour on the app.
-19. As a site admin, I want to be able to ban or remove users, so that old or malicious accounts are removed.
+17. As a site admin, I want to have access to all users’ information, so that I can store the data in the database for future reference.
+18. As a site admin, I need to have control over user and account activity, so that I can monitor users’ behaviour on the app.
+19. As a site admin, I need to be able to ban or remove users, so that old or malicious accounts are removed.
 20. As a site admin, I want to have access to reviews, so that I can follow up the poster and get additional information about the customer/pet sitter.
+
+18. As a site admin, I want to have access to all users’ information, so that I can .
+19. As a site admin, I want to have control over user and account activity, so that I can monitor users’ behaviour on the app.
+20. As a site admin, I want to be able to ban or remove users, so that old or malicious accounts are removed.
+21. As a site admin, I want to have access to reviews, so that I can follow up the poster and get additional information about the customer/pet sitter.
 
