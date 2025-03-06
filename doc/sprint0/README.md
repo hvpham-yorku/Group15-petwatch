@@ -23,12 +23,11 @@ Tech Stack
 Setup
 •	Install Node.js, npm, MySQL, and Git.
 •	Clone the repository 
-git clone https://github.com/your-repo/PetWatch.git
+git clone 
 cd PetWatch
 •	Configure MySQL database
 CREATE DATABASE petwatch;
 •	Update database configuration
-DATABASE_URL=mysql://root:yourpassword@localhost:3306/petwatch
 •	Install dependencies
 npm install
 •	Start the application
