@@ -1,4 +1,4 @@
-Project Backlog - User stories:
+Product Backlog - User stories:
 1. As a user, I am required to login so that I can access my personal data.
 2. As a customer, I want to be able to add and update my pet(s) information, so that it is easily accessible.
 3. As a customer, I want to post jobs on a notice board, so that I reach a wider range if I have no specific preference for a sitter.
