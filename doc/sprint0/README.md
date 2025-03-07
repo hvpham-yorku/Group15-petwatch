@@ -1,5 +1,5 @@
 # PetWatch Overview
-## PetWatch is a pet-sitting platform that connects pet owners with trusted pet sitters. Customers can post jobs, browse available sitters, and communicate directly, while pet sitters can manage their availability and apply for jobs. Site admins oversee platform activity to ensure security and efficiency.
+#### PetWatch is a pet-sitting platform that connects pet owners with trusted pet sitters. Customers can post jobs, browse available sitters, and communicate directly, while pet sitters can manage their availability and apply for jobs. Site admins oversee platform activity to ensure security and efficiency.
 
 ## Features
 * User Authentication: Secure login system for all users.
