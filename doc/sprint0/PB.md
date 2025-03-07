@@ -1,5 +1,5 @@
 Product Backlog - User stories:
-1. As a user, I am required to login so that I can access my personal data.
+1. As a user, I want to login so that I can access my personal data.
 2. As a customer, I want to be able to add and update my pet(s) information, so that it is easily accessible.
 3. As a customer, I want to post jobs on a notice board, so that I reach a wider range if I have no specific preference for a sitter.
 4. As a customer, I want to view available pet sitters, so that I can choose the best suited for my pet(s) according to my preference.
@@ -8,7 +8,7 @@ Product Backlog - User stories:
 7. As a customer, I want to be able to indicate priority for a job, so that any urgent or last-minute jobs have higher priority.
 8. As a customer, I want to be able to request special accommodations, so that pets with special health requirements can be handled appropriately.
 9. As a pet sitter, I want to display my bio and general information, so that customers can see my availability and qualifications.
-10. As a pet sitter, I need to include my qualifications and contact information, so that customers have the necessary information available.
+10. As a pet sitter, I want to include my qualifications and contact information, so that customers have the necessary information available.
 11. As a pet sitter, I want to have a schedule/timetable, so that I can update and keep track of my availability and upcoming jobs.
 12. As a pet sitter, I want to be able to browse through job postings on the notice board, so that I can volunteer for jobs that fit my schedule.
 13. As a pet sitter, I want to have the option to accept or decline a customer’s offer, so that I can handle personal commitments.
