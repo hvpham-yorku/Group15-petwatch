@@ -1,4 +1,4 @@
-package com.petwatch.petwatch.controller;
+package com.petwatch.petwatch.Controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -7,19 +7,26 @@ public class Booking {
     private int bookingId;
     private PetOwner petOwner;
     private PetSitter petSitter;
-    private List<Pet> pets = new ArrayList<Pet>();
+    private Status status;
 
+    public enum Status{
+        PENDING, ACCEPTED, DECLINED
+    }
 
-    public Booking(PetOwner petOwner, PetSitter petSitter, List<Pet> pets) {
+    public Booking(PetOwner petOwner, PetSitter petSitter, Status status) {
         this.petOwner = petOwner;
         this.petSitter = petSitter;
-        this.pets = pets;
+        this.status = status;
     }
 
 
     public int getBookingId() {
 
         return bookingId;
+    }
+
+    public void setBookingId(int bookingId) {
+        this.bookingId = bookingId;
     }
 
     public PetOwner getPetOwner() {
@@ -42,13 +49,14 @@ public class Booking {
         this.petSitter = petSitter;
     }
 
-    public List<Pet> getPets() {
+    public Status getStatus() {
 
-        return pets;
+        return status;
     }
 
-    public void setPets(List<Pet> pets) {
+    public void setStatus(Status status) {
 
-        this.pets = pets;
+        this.status = status;
     }
+
 }
