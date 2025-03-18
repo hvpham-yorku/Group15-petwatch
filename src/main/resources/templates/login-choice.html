@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Choose Role - PetWatch</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f7fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.5rem;
+            width: 100%;
+            max-width: 750px;
+            min-height: 500px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .role-button {
+            background-color: #4A89AF;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 0.25rem;
+            transition: all 0.3s ease;
+        }
+        .role-button:hover {
+            background-color: #3A7192;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-blue-600 shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-7">
+                    <div>
+                        <a href="/" class="flex items-center py-4 px-2">
+                            <span class="font-semibold text-white text-lg">🐾 PetWatch</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-3">
+                    <a href="/login-choice" class="py-2 px-4 bg-white text-blue-600 rounded hover:bg-blue-100 transition duration-300">Login</a>
+                    <a href="/signup-choice" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-400 transition duration-300">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <h1 class="text-2xl text-gray-800 font-semibold mb-4">Login As</h1>
+        
+        <div class="card p-8 flex flex-col items-center">
+            <h2 class="text-6xl text-center text-blue-500 font-light mb-16">PetWatch</h2>
+            
+            <h3 class="text-2xl mb-8">I Am A:</h3>
+            
+            <div class="flex items-center justify-center space-x-16 mb-16">
+                <a href="/login-owner" class="role-button text-xl font-medium">Pet Owner</a>
+                <span class="text-xl">Or</span>
+                <a href="/login-sitter" class="role-button text-xl font-medium">Pet Sitter</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 

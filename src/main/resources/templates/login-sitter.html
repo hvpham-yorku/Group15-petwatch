@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Pet Sitter - PetWatch</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            background-color: #f7fafc;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 0;
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.5rem;
+            width: 100%;
+            max-width: 500px;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        input {
+            background-color: #E5E7EB;
+            border: none;
+            border-radius: 0.25rem;
+            padding: 0.5rem;
+            margin-top: 0.25rem;
+            width: 100%;
+        }
+        .action-button {
+            background-color: #4A89AF;
+            color: white;
+            padding: 0.5rem 2rem;
+            border-radius: 0.25rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .action-button:hover {
+            background-color: #3A7192;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="bg-blue-600 shadow-lg">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-7">
+                    <div>
+                        <a href="/" class="flex items-center py-4 px-2">
+                            <span class="font-semibold text-white text-lg">🐾 PetWatch</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="hidden md:flex items-center space-x-3">
+                    <a href="/login-choice" class="py-2 px-4 bg-white text-blue-600 rounded hover:bg-blue-100 transition duration-300">Login</a>
+                    <a href="/signup-choice" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-400 transition duration-300">Sign Up</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="content">
+        <h1 class="text-2xl text-gray-800 font-semibold mb-4">Pet Sitter Login</h1>
+        
+        <div class="card p-8">
+            <h2 class="text-4xl text-center text-blue-500 font-light mb-8">PetWatch</h2>
+            
+            <form class="space-y-6">
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                    <input type="email" id="email" name="email" required class="mt-1">
+                </div>
+                
+                <div>
+                    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                    <input type="password" id="password" name="password" required class="mt-1">
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="remember-me" name="remember-me" type="checkbox" class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded">
+                        <label for="remember-me" class="ml-2 block text-sm text-gray-700">Remember me</label>
+                    </div>
+                    
+                    <div class="text-sm">
+                        <a href="#" class="text-blue-600 hover:text-blue-500">Forgot your password?</a>
+                    </div>
+                </div>
+                
+                <div class="mt-6">
+                    <button type="submit" class="action-button w-full py-2">Login</button>
+                </div>
+                
+                <div class="mt-4 text-center">
+                    <a href="/login-choice" class="text-sm text-blue-600 hover:text-blue-500">Back to role selection</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
