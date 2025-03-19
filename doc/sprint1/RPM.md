@@ -20,7 +20,7 @@
 ## **Release Goals**
 1. **User App Login System**: Develop a working platform to allow users to log in to the PetWatch application.  
 2. **User Profile Management**: Implement functionality for users to create accounts and profiles to easily access their information.  
-3. **Pet Sitter Account Details**: Implement functionality for users to add and edit profiles for their pet(s) information. 
+3. **Pet Profile Details**: Implement functionality for users to add and edit profiles for their pet(s) information. 
 4. **Pet Sitter Account Details**: Enable pet sitters to display their bio and general information.  
 
 ---
