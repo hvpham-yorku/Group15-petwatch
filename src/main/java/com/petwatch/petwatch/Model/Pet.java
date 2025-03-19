@@ -15,7 +15,7 @@ public class Pet {
     public Pet(String petName, int petAge, PetType petType, int petOwnerId) {
         this.petName = petName;
         this.petAge = petAge;
-        this.type = type;
+        this.type = petType;
         this.petOwnerId = petOwnerId;
     }
 

@@ -134,7 +134,7 @@ public class UserDAO {
             return null;
         }
 
-        String sql = "SELECT * FROM users WHERE email = " + email;
+        String sql = "SELECT * FROM users WHERE email = '" + email + "'";
         User user = null;
 
         try {
@@ -160,6 +160,35 @@ public class UserDAO {
 
         return user; // Returns null if not found
     }
+
+    public String getPasswordByEmail(String email){
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return null;
+        }
+
+        String password = null;
+
+        String sql = "SELECT * FROM users WHERE email = '" + email + "'";
+
+        try {
+
+            statement = connection.createStatement();
+
+            ResultSet rs = statement.executeQuery(sql);
+
+            if (rs.next()) {
+                password = rs.getString("password");
+            }
+
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("Error retrieving User: " + e.getMessage());
+        }
+
+        return password;
+    }
+
 
     // closes the connection when we are done with it
     public void closeConnection() {
