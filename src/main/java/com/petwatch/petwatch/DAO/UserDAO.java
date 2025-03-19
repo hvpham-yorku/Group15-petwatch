@@ -127,6 +127,40 @@ public class UserDAO {
         return user; // Returns null if not found
     }
 
+    public User getUserByEmail(String email) {
+
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return null;
+        }
+
+        String sql = "SELECT * FROM users WHERE email = " + email;
+        User user = null;
+
+        try {
+
+            statement = connection.createStatement();
+
+            ResultSet rs = statement.executeQuery(sql);
+
+
+            if (rs.next()) {
+                user = new User(
+                        rs.getInt("id"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        User.Role.valueOf(rs.getString("role"))
+                );
+            }
+
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("Error retrieving User: " + e.getMessage());
+        }
+
+        return user; // Returns null if not found
+    }
+
     // closes the connection when we are done with it
     public void closeConnection() {
         try {
