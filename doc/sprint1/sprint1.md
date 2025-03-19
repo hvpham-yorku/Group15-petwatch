@@ -14,5 +14,6 @@ The user stories being used for the sprint, in order of priority, are:
 
 The participants for this sprint are Arjon, Gjergj, Isha, Noah, and Sakshi. 
 Arjon and Sakshi will be working on the frontend to complete our sprint goals, while Gjergj, Isha, and Noah will be working on the backend.
+Aditioanlly, Isha and Noah will be working on docuementation (on Github and Trello).
 
-We decided on completing these user stories for sprint 1 as well felt that they provide a good foundation to build upon and are therefore a good starting point.
+We decided on completing these user stories for sprint 1 as well felt that they provide a good foundation to build upon and are therefore a good starting point for our project.
