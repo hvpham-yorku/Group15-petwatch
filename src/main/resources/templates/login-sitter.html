@@ -65,8 +65,8 @@
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-3">
-                    <a href="/login-choice" class="py-2 px-4 bg-white text-blue-600 rounded hover:bg-blue-100 transition duration-300">Login</a>
-                    <a href="/signup-choice" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-400 transition duration-300">Sign Up</a>
+                    <a href="login-choice.html" class="py-2 px-4 bg-white text-blue-600 rounded hover:bg-blue-100 transition duration-300">Login</a>
+                    <a href="signup-choice.html" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-400 transition duration-300">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -101,14 +101,28 @@
                 </div>
                 
                 <div class="mt-6">
-                    <button type="submit" class="action-button w-full py-2">Login</button>
+                    <button type="submit" class="action-button w-full py-2" onclick="loginSitter()">Login</button>
                 </div>
                 
                 <div class="mt-4 text-center">
-                    <a href="/login-choice" class="text-sm text-blue-600 hover:text-blue-500">Back to role selection</a>
+                    <a href="login-choice.html" class="text-sm text-blue-600 hover:text-blue-500">Back to role selection</a>
                 </div>
             </form>
         </div>
     </div>
+    
+
+
+
+<script>
+    function loginSitter() {
+        console.log("✅ Pet Sitter Login Clicked!"); // Debugging
+        localStorage.setItem("loggedInUser", "true");
+        localStorage.setItem("userType", "sitter");
+        window.location.href = "dashboard-sitter.html"; // Redirect to Dashboard
+    }
+</script>
+<script src="login.js"></script>
+
 </body>
 </html>
