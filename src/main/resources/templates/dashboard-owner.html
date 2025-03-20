@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - PetWatch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex">
+
+    <!-- Sidebar -->
+    <div class="w-64 bg-white shadow-md p-5">
+        <h2 class="text-2xl font-bold flex items-center space-x-2">
+            🐾 PetWatch
+        </h2>
+        <nav class="mt-6">
+            <button id="ownerBtn" class="w-full text-left p-3 bg-blue-500 text-white hidden rounded">
+                <i class="fas fa-paw"></i> Pet Owner Dashboard
+            </button>
+            <button id="sitterBtn" class="w-full text-left p-3 bg-green-500 text-white hidden rounded">
+                <i class="fas fa-user-md"></i> Pet Sitter Dashboard
+            </button>
+            <button id="logoutBtn" class="w-full text-left p-3 mt-6 bg-red-500 text-white rounded">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-6">
+        <!-- Pet Owner Dashboard -->
+        <div id="ownerDashboard" class="hidden">
+            <h2 class="text-3xl font-bold">Your Pets</h2>
+            <p class="text-gray-600">Manage your pet profiles here.</p>
+
+            <!-- Pet Cards -->
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-6 pet-container">
+                <div class="bg-white p-4 shadow rounded-lg flex justify-center items-center">
+                    <button class="add-new-pet text-gray-500 text-lg">➕ Add New Pet</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+    
+    <!-- Add/Edit Pet Modal -->
+    <div id="petModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg w-96">
+            <h2 id="modalTitle" class="text-xl font-bold mb-4">Add New Pet</h2>
+            
+            <!-- Pet Type Selection -->
+            <div id="petTypeContainer" class="flex justify-center space-x-4 mb-4">
+                <button class="pet-type-button bg-blue-500 text-white px-4 py-2 rounded" data-type="Dog">Dog</button>
+                <button class="pet-type-button bg-green-500 text-white px-4 py-2 rounded" data-type="Cat">Cat</button>
+                <button class="pet-type-button bg-yellow-500 text-white px-4 py-2 rounded" data-type="Bird">Bird</button>
+                <button class="pet-type-button bg-gray-500 text-white px-4 py-2 rounded" data-type="Other">Other</button>
+            </div>
+            
+            <!-- Selected Pet Type Display -->
+            <p id="selectedPetTypeText" class="text-center text-gray-700 mb-4">Selected Pet: None</p>
+            
+            <button id="savePet" class="w-full bg-blue-500 text-white p-2 rounded">Save</button>
+            <button onclick="closeModal()" class="w-full mt-2 bg-gray-300 p-2 rounded">Cancel</button>
+        </div>
+    </div>
+
+</body>
+</html>
