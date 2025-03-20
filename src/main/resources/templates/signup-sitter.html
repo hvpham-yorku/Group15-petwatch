@@ -77,59 +77,60 @@
         <div class="card p-8">
             <h2 class="text-6xl text-center text-blue-500 font-light mb-8">PetWatch</h2>
             
-            <form class="grid grid-cols-2 gap-8">
+            <form class="grid grid-cols-2 gap-8" action="saveUser" method="post">
                 <div class="col-span-1">
                     <div class="mb-4">
                         <label for="firstName" class="block">First Name:</label>
-                        <input type="text" id="firstName" required>
+                        <input type="text" name="firstName" id="firstName" required>
                     </div>
                     
                     <div class="mb-4">
                         <label for="email" class="block">Email:</label>
-                        <input type="email" id="email" required>
+                        <input type="email" name="email" id="email" required>
                     </div>
                     
                     <div class="mb-4">
                         <label for="password" class="block">Password:</label>
-                        <input type="password" id="password" required>
+                        <input type="password" name="password" id="password" required>
                     </div>
                     
                     <div class="mb-4">
                         <label for="retypePassword" class="block">Retype Password:</label>
-                        <input type="password" id="retypePassword" required>
+                        <input type="password" name="retypePassword" id="retypePassword" required>
                     </div>
                     
                     <div class="mb-4">
                         <label for="phoneNumber" class="block">Phone Number:</label>
-                        <input type="tel" id="phoneNumber" required>
+                        <input type="tel" name="phoneNumber" id="phoneNumber" required>
                     </div>
                 </div>
                 
                 <div class="col-span-1 border-l pl-8">
                     <div class="mb-4">
                         <label for="country" class="block">Country:</label>
-                        <input type="text" id="country" required>
+                        <input type="text" name="country" id="country" required>
                     </div>
                     
                     <div class="mb-4">
                         <label for="stateProvince" class="block">State/Province:</label>
-                        <input type="text" id="stateProvince" required>
+                        <input type="text" name="stateProvince" id="stateProvince" required>
                     </div>
                     
                     <div class="mb-4">
                         <label for="city" class="block">City:</label>
-                        <input type="text" id="city" required>
+                        <input type="text" name="city" id="city" required>
                     </div>
                     
                     <div class="mb-4">
                         <label for="address" class="block">Address:</label>
-                        <input type="text" id="address" required>
+                        <input type="text" name="address" id="address" required>
                     </div>
                     
                     <div class="mb-4">
                         <label for="postalCode" class="block">Postal Code:</label>
-                        <input type="text" id="postalCode" required>
+                        <input type="text" name="postalCode" id="postalCode" required>
                     </div>
+                    <input type="text" id="role" name="role" value="EMPLOYEE" style="display:none;visibility:hidden;" >
                 </div>
                 
                 <div class="col-span-1">
