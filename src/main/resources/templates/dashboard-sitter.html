@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sitter Dashboard - PetWatch</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex">
+
+    <!-- Sidebar -->
+    <div class="w-64 bg-white shadow-md p-5">
+        <h2 class="text-2xl font-bold flex items-center space-x-2">
+            🐾 PetWatch
+        </h2>
+        <nav class="mt-6">
+            <button id="sitterBtn" class="w-full text-left p-3 bg-green-500 text-white rounded">
+                <i class="fas fa-user-md"></i> Pet Sitter Dashboard
+            </button>
+            <button id="logoutBtn" class="w-full text-left p-3 mt-6 bg-red-500 text-white rounded">
+                <i class="fas fa-sign-out-alt"></i> Logout
+            </button>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-6">
+        <h2 class="text-3xl font-bold">Your Sitter Profile</h2>
+        <p class="text-gray-600">Update your bio, qualifications, and contact info.</p>
+
+        <div class="bg-white p-6 shadow-lg rounded-lg mt-6">
+            <h3 class="text-xl font-bold">👤 John Doe</h3>
+            <p class="text-gray-500">Professional Pet Sitter with 5 years of experience.</p>
+            <p class="mt-2 text-sm"><i class="fas fa-phone"></i> Contact: +1 234 567 890</p>
+            <button class="mt-4 px-4 py-2 bg-green-500 text-white rounded">Edit Profile</button>
+        </div>
+
+        <!-- Sitter Stats -->
+        <div class="grid grid-cols-2 gap-4 mt-6">
+            <div class="bg-blue-100 p-4 rounded-lg">
+                <h3 class="text-xl font-bold">🐶 20+</h3>
+                <p class="text-gray-600">Pets Taken Care Of</p>
+            </div>
+            <div class="bg-green-100 p-4 rounded-lg">
+                <h3 class="text-xl font-bold">⭐ 4.8</h3>
+                <p class="text-gray-600">Average Rating</p>
+            </div>
+        </div>
+
+        <!-- Job Requests -->
+        <h3 class="text-2xl font-bold mt-8">Pet Sitting Requests</h3>
+        <p class="text-gray-600">Accept or decline job requests from pet owners.</p>
+        <ul id="request-list" class="mt-4">
+            <li class="bg-white p-4 shadow rounded-lg mb-2">
+                <p class="font-bold">Owner: Alice Johnson</p>
+                <p class="text-gray-600">Golden Retriever - 3 days</p>
+                <button class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Accept</button>
+                <button class="mt-2 px-4 py-2 bg-red-500 text-white rounded">Decline</button>
+            </li>
+        </ul>
+    </div>
+
+    <!--  Fix: Load script after HTML content -->
+    <script defer src="dashboard.js"></script>
+</body>
+</html>
