@@ -85,12 +85,36 @@ public class SecurityConfig {
                 
                 Set<String> roles = AuthorityUtils.authorityListToSet(authentication.getAuthorities());
                 System.out.println("Login successful for: " + authentication.getName() + " with roles: " + roles);
+                System.out.println("Authentication details: " + authentication.getDetails());
+                System.out.println("Authentication principal: " + authentication.getPrincipal());
                 
+                // Check if this is coming from pet sitter login page
+                String referer = request.getHeader("Referer");
+                boolean comingFromSitterPage = (referer != null && referer.contains("login-sitter"));
+                System.out.println("Coming from sitter page: " + comingFromSitterPage);
+                
+                // Get the user from the database again to double-check their role
+                String username = authentication.getName();
+                com.petwatch.petwatch.Model.User user = ApiController.getUserByEmail(username);
+                System.out.println("User from database: " + (user != null ? user.getEmail() : "null") + 
+                                  " with role: " + (user != null ? user.getRole() : "null"));
+                
+                // If coming from sitter page and we can find the user, force redirect to sitter dashboard
+                if (comingFromSitterPage && user != null) {
+                    System.out.println("Pet sitter login detected, redirecting to sitter dashboard");
+                    response.sendRedirect("/dashboard-sitter");
+                    return;
+                }
+                
+                // Normal redirect logic based on role
                 if (roles.contains("ROLE_USER")) {
+                    System.out.println("Redirecting to owner dashboard based on ROLE_USER");
                     response.sendRedirect("/dashboard-owner");
                 } else if (roles.contains("ROLE_EMPLOYEE")) {
+                    System.out.println("Redirecting to sitter dashboard based on ROLE_EMPLOYEE");
                     response.sendRedirect("/dashboard-sitter");
                 } else {
+                    System.out.println("No recognized role, redirecting to login choice");
                     response.sendRedirect("/login-choice");
                 }
             }
@@ -130,12 +154,14 @@ public class SecurityConfig {
             
             // First, check the preloaded users for development/testing
             if ("owner@example.com".equals(username)) {
+                System.out.println("Using hardcoded owner test account");
                 return User.builder()
                     .username("owner@example.com")
                     .password("password")  // Using plain text with NoOpPasswordEncoder
                     .roles("USER")
                     .build();
             } else if ("sitter@example.com".equals(username)) {
+                System.out.println("Using hardcoded sitter test account");
                 return User.builder()
                     .username("sitter@example.com")
                     .password("password")  // Using plain text with NoOpPasswordEncoder
@@ -150,10 +176,17 @@ public class SecurityConfig {
                 System.out.println("Found user in database: " + username + " with role: " + user.getRole());
                 // Convert PetWatch User to Spring Security UserDetails
                 Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
-                if (user.getRole() == Role.USER) {
-                    authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
-                } else {
+                
+                // More detailed role checking
+                com.petwatch.petwatch.Model.User.Role userRole = user.getRole();
+                System.out.println("User role from database (detailed): " + userRole);
+                
+                if (userRole == com.petwatch.petwatch.Model.User.Role.EMPLOYEE) {
+                    System.out.println("Assigning EMPLOYEE role");
                     authorities.add(new SimpleGrantedAuthority("ROLE_EMPLOYEE"));
+                } else {
+                    System.out.println("Assigning USER role");
+                    authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
                 }
                 
                 return new org.springframework.security.core.userdetails.User(

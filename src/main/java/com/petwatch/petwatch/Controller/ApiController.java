@@ -81,9 +81,20 @@ public class ApiController {
             
             // Default to USER role when not specified (for owner signup)
             String roleStr = (String) userData.get("role");
-            User.Role role = (roleStr != null) ? 
-                ("owner".equalsIgnoreCase(roleStr) ? User.Role.USER : User.Role.EMPLOYEE) : 
-                User.Role.USER;
+            User.Role role;
+            
+            if (roleStr != null) {
+                if ("employee".equalsIgnoreCase(roleStr)) {
+                    role = User.Role.EMPLOYEE;
+                    System.out.println("Setting role to EMPLOYEE based on roleStr: " + roleStr);
+                } else {
+                    role = User.Role.USER;
+                    System.out.println("Setting role to USER based on roleStr: " + roleStr);
+                }
+            } else {
+                role = User.Role.USER;
+                System.out.println("No role specified, defaulting to USER");
+            }
             
             System.out.println("Received signup data: " + userData);
             
