@@ -24,7 +24,8 @@ public class Pet {
         return petId;
     }
 
-    public void setPetId(int anInt) {
+    public void setPetId(int petId) {
+        this.petId = petId;
     }
 
 
@@ -63,5 +64,8 @@ public class Pet {
         return petOwnerId;
     }
 
+    public void setPetOwnerId(int petOwnerId) {
+        this.petOwnerId = petOwnerId;
+    }
 
 }

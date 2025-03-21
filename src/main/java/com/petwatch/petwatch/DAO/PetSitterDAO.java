@@ -35,8 +35,14 @@ public class PetSitterDAO {
             return -1;
         }
 
-        String sql = "INSERT INTO pet_sitters (user_id, name, experience, availability) VALUES (" +
-                petSitter.getUserId() + ", '" + petSitter.getName() + "', '" + petSitter.getExperience() + "', '" + petSitter.getAvailability() + "')";
+        String sql = "INSERT INTO pet_sitters (user_id, name, experience, availability, city, bio, phone) VALUES (" +
+                petSitter.getUserId() + ", '" + 
+                petSitter.getName() + "', '" + 
+                petSitter.getExperience() + "', '" + 
+                petSitter.getAvailability() + "', '" + 
+                petSitter.getCity() + "', '" + 
+                petSitter.getBio() + "', '" + 
+                petSitter.getPhone() + "')";
 
         try {
             statement = connection.createStatement();
@@ -54,7 +60,9 @@ public class PetSitterDAO {
             }
             statement.close();
         } catch (SQLException e) {
-            //e.printStackTrace();
+            System.err.println("Error adding pet sitter: " + e.getMessage());
+            System.err.println("SQL: " + sql);
+            e.printStackTrace();
         }
 
         return petSitter.getPetSitterId();
@@ -115,24 +123,66 @@ public class PetSitterDAO {
 
             if (rs.next()) {
                 petSitter = new PetSitter(
+                        rs.getInt("id"),
                         rs.getInt("user_id"),
                         rs.getString("name"),
                         rs.getString("experience"),
-                        rs.getString("availability")
-                         // Linking to User
+                        rs.getString("availability"),
+                        rs.getDouble("rating"),
+                        rs.getString("city"),
+                        rs.getString("bio"),
+                        rs.getString("phone")
                 );
-                petSitter.setPetSitterId(rs.getInt("id")); // Set the actual petOwner ID
             }
 
             statement.close();
         } catch (SQLException e) {
-            System.err.println("Error retrieving PetOwner: " + e.getMessage());
+            System.err.println("Error retrieving PetSitter: " + e.getMessage());
         }
 
         return petSitter; // Returns null if not found
     }
 
+    /**
+     * Gets a PetSitter record by user ID
+     *
+     * @param userId The user ID to search for
+     * @return PetSitter object or null if not found
+     */
+    public PetSitter getPetSitterByUserId(int userId) {
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return null;
+        }
 
+        String sql = "SELECT * FROM pet_sitters WHERE user_id = " + userId;
+        PetSitter petSitter = null;
+
+        try {
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            if (rs.next()) {
+                petSitter = new PetSitter(
+                        rs.getInt("id"),
+                        rs.getInt("user_id"),
+                        rs.getString("name"),
+                        rs.getString("experience"),
+                        rs.getString("availability"),
+                        rs.getDouble("rating"),
+                        rs.getString("city"),
+                        rs.getString("bio"),
+                        rs.getString("phone")
+                );
+            }
+
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("Error retrieving PetSitter by user ID: " + e.getMessage());
+        }
+
+        return petSitter;
+    }
 
     // closes the connection when we are done with it
     public void closeConnection() {

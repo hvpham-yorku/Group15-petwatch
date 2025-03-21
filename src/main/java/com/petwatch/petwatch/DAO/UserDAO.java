@@ -189,6 +189,81 @@ public class UserDAO {
         return password;
     }
 
+    /**
+     * Gets the pet owner ID for a given user ID
+     * 
+     * @param userId The user ID to look up
+     * @return The pet owner ID, or -1 if not found or on error
+     */
+    public int getPetOwnerIdForUser(int userId) {
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return -1;
+        }
+
+        String sql = "SELECT id FROM pet_owners WHERE user_id = " + userId;
+        int petOwnerId = -1;
+
+        try {
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            if (rs.next()) {
+                petOwnerId = rs.getInt("id");
+                System.out.println("Found pet owner with ID: " + petOwnerId + " for user ID: " + userId);
+            } else {
+                System.out.println("No pet owner found for user ID: " + userId);
+            }
+
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("Error retrieving pet owner: " + e.getMessage());
+        }
+
+        return petOwnerId;
+    }
+
+    /**
+     * Creates a pet owner profile for a given user
+     * 
+     * @param userId The user ID to create the pet owner for
+     * @param name The name for the pet owner (can be email if no real name available)
+     * @param phone The phone number for the pet owner
+     * @param address The address for the pet owner
+     * @return The new pet owner ID, or -1 on error
+     */
+    public int createPetOwnerForUser(int userId, String name, String phone, String address) {
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return -1;
+        }
+
+        String sql = "INSERT INTO pet_owners (user_id, name, phone, address) VALUES (" +
+                userId + ", '" + name + "', '" + phone + "', '" + address + "')";
+        
+        int petOwnerId = -1;
+
+        try {
+            statement = connection.createStatement();
+            int affectedRows = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+            if (affectedRows > 0) {
+                ResultSet rs = statement.getGeneratedKeys();
+                if (rs.next()) {
+                    petOwnerId = rs.getInt(1);
+                    System.out.println("Created pet owner profile with ID: " + petOwnerId);
+                }
+            }
+
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("Error creating pet owner: " + e.getMessage());
+            System.err.println("SQL: " + sql);
+            e.printStackTrace();
+        }
+
+        return petOwnerId;
+    }
 
     // closes the connection when we are done with it
     public void closeConnection() {

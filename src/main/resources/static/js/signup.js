@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
         console.log("📤 Sending data:", formData);
 
         // Send data to the backend
-        fetch("http://localhost:5000/api/signup", {
+        fetch("/api/signup", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -45,7 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .then(data => {
             console.log("Signup successful:", data);
             alert("Signup successful! Redirecting to login...");
-            window.location.href = "login-choice.html"; // Redirect to login page
+            window.location.href = "/login-choice"; // Redirect to login page
         })
         .catch(error => {
             console.error("Error signing up:", error);

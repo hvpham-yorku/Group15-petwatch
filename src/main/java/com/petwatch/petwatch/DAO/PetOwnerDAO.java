@@ -34,8 +34,15 @@ public class PetOwnerDAO {
             return -1;
         }
 
-        String sql = "INSERT INTO pet_owners (user_id, name, phone, address) VALUES (" +
-                petOwner.getUserId() + ", '" + petOwner.getName() + "', '" + petOwner.getPhone() + "', '" + petOwner.getAddress() + "')";
+        String sql = "INSERT INTO pet_owners (user_id, name, phone, address, country, state, city, postal_code) VALUES (" +
+                petOwner.getUserId() + ", '" + 
+                petOwner.getName() + "', '" + 
+                petOwner.getPhone() + "', '" + 
+                petOwner.getAddress() + "', '" + 
+                petOwner.getCountry() + "', '" + 
+                petOwner.getState() + "', '" + 
+                petOwner.getCity() + "', '" + 
+                petOwner.getPostalCode() + "')";
         try {
             statement = connection.createStatement();
             int affectedRows = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
@@ -52,7 +59,9 @@ public class PetOwnerDAO {
             }
             statement.close();
         } catch (SQLException e) {
-            //e.printStackTrace();
+            System.err.println("Error adding pet owner: " + e.getMessage());
+            System.err.println("SQL: " + sql);
+            e.printStackTrace();
         }
 
         return petOwner.getPetOwnerId();
@@ -112,12 +121,16 @@ public class PetOwnerDAO {
 
             if (rs.next()) {
                 petOwner = new PetOwner(
+                        rs.getInt("id"),
                         rs.getString("address"),
                         rs.getString("phone"),
                         rs.getString("name"),
-                        rs.getInt("user_id") // Linking to User
+                        rs.getInt("user_id"),
+                        rs.getString("country"),
+                        rs.getString("state"),
+                        rs.getString("city"),
+                        rs.getString("postal_code")
                 );
-                petOwner.setPetOwnerId(rs.getInt("id")); // Set the actual petOwner ID
             }
 
             statement.close();
@@ -128,7 +141,46 @@ public class PetOwnerDAO {
         return petOwner; // Returns null if not found
     }
 
+    /**
+     * Gets a PetOwner record by user ID
+     *
+     * @param userId The user ID to search for
+     * @return PetOwner object or null if not found
+     */
+    public PetOwner getPetOwnerByUserId(int userId) {
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return null;
+        }
 
+        String sql = "SELECT * FROM pet_owners WHERE user_id = " + userId;
+        PetOwner petOwner = null;
+
+        try {
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            if (rs.next()) {
+                petOwner = new PetOwner(
+                        rs.getInt("id"),
+                        rs.getString("address"),
+                        rs.getString("phone"),
+                        rs.getString("name"),
+                        rs.getInt("user_id"),
+                        rs.getString("country"),
+                        rs.getString("state"),
+                        rs.getString("city"),
+                        rs.getString("postal_code")
+                );
+            }
+
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("Error retrieving PetOwner by user ID: " + e.getMessage());
+        }
+
+        return petOwner;
+    }
 
     // closes the connection when we are done with it
     public void closeConnection() {
