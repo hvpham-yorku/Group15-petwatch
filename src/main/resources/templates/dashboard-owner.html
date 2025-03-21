@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,6 +24,11 @@
             <button id="logoutBtn" class="w-full text-left p-3 mt-6 bg-red-500 text-white rounded">
                 <i class="fas fa-sign-out-alt"></i> Logout
             </button>
+            
+            <!-- Hidden logout form for CSRF protection -->
+            <form id="logoutForm" th:action="@{/perform-logout}" method="POST" class="hidden">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            </form>
         </nav>
     </div>
 
@@ -43,7 +48,7 @@
         </div>
     </div>
 
-    <script src="dashboard.js"></script>
+    <script src="/js/dashboard.js"></script>
     
     <!-- Add/Edit Pet Modal -->
     <div id="petModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex justify-center items-center">

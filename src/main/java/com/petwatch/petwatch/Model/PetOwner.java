@@ -6,12 +6,32 @@ public class PetOwner {
     private String name;
     private String phone;
     private String address;
+    private String country;
+    private String state;
+    private String city;
+    private String postalCode;
 
     public PetOwner(String address, String phone, String name, int userId) {
         this.address = address;
         this.phone = phone;
         this.name = name;
         this.userId = userId;
+        this.country = "";
+        this.state = "";
+        this.city = "";
+        this.postalCode = "";
+    }
+
+    public PetOwner(String address, String phone, String name, int userId, 
+                    String country, String state, String city, String postalCode) {
+        this.address = address;
+        this.phone = phone;
+        this.name = name;
+        this.userId = userId;
+        this.country = country;
+        this.state = state;
+        this.city = city;
+        this.postalCode = postalCode;
     }
 
     public PetOwner(int id, String address, String phone, String name, int userId) {
@@ -20,6 +40,23 @@ public class PetOwner {
         this.phone = phone;
         this.name = name;
         this.userId = userId;
+        this.country = "";
+        this.state = "";
+        this.city = "";
+        this.postalCode = "";
+    }
+    
+    public PetOwner(int id, String address, String phone, String name, int userId,
+                    String country, String state, String city, String postalCode) {
+        this.petOwnerId = id;
+        this.address = address;
+        this.phone = phone;
+        this.name = name;
+        this.userId = userId;
+        this.country = country;
+        this.state = state;
+        this.city = city;
+        this.postalCode = postalCode;
     }
 
     public int getPetOwnerId() {
@@ -56,5 +93,37 @@ public class PetOwner {
 
     public void setName(String name) {
         this.name = name;
+    }
+    
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
     }
 }

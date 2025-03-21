@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full">
+<html lang="en" class="h-full" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -65,8 +65,8 @@
                     </div>
                 </div>
                 <div class="hidden md:flex items-center space-x-3">
-                    <a href="login-choice.html" class="py-2 px-4 bg-white text-blue-600 rounded hover:bg-blue-100 transition duration-300">Login</a>
-                    <a href="signup-choice.html" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-400 transition duration-300">Sign Up</a>
+                    <a href="/login-choice" class="py-2 px-4 bg-white text-blue-600 rounded hover:bg-blue-100 transition duration-300">Login</a>
+                    <a href="/signup-choice" class="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-400 transition duration-300">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -78,7 +78,14 @@
         <div class="card p-8">
             <h2 class="text-4xl text-center text-blue-500 font-light mb-8">PetWatch</h2>
             
-            <form class="space-y-6" onsubmit="event.preventDefault(); loginOwner();">
+            <form class="space-y-6" action="/login" method="POST">
+                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                <input type="hidden" name="role" value="OWNER">
+
+                <!-- Show error message if login failed -->
+                <div th:if="${param.error}" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4">
+                    <span class="block sm:inline">Invalid username or password</span>
+                </div>
 
                 <div>
                     <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
@@ -102,28 +109,18 @@
                 </div>
                 
                 <div class="mt-6">
-                    <button type="submit" class="action-button w-full py-2" onclick="loginOwner()">Login</button>
+                    <button type="submit" class="action-button w-full py-2">Login</button>
                 </div>
                 
                 <div class="mt-4 text-center">
-                    <a href="login-choice.html" class="text-sm text-blue-600 hover:text-blue-500">Back to role selection</a>
+                    <a href="/login-choice" class="text-sm text-blue-600 hover:text-blue-500">Back to role selection</a>
                 </div>
             </form>
         </div>
     </div>
 
-    <!-- JavaScript for login functionality -->
-    <script>
-        function loginOwner() {
-            // Store user login status and type in localStorage
-            localStorage.setItem("loggedInUser", "true");
-            localStorage.setItem("userType", "owner");
-
-            // Redirect to the dashboard
-            window.location.href = "dashboard-owner.html";
-        }
-    </script>
-    <script src="login.js"></script>
+    <!-- Remove custom JS login logic, now using Spring Security -->
+    <script src="/js/login.js"></script>
 
 </body>
 </html> 

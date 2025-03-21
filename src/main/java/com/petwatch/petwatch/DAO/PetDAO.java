@@ -56,7 +56,9 @@ public class PetDAO {
                 }
             }
         } catch (SQLException e) {
-
+            System.err.println("Error adding pet: " + e.getMessage());
+            System.err.println("SQL: " + sql);
+            e.printStackTrace();
         }
 
         return petId;
@@ -132,7 +134,82 @@ public class PetDAO {
         return pet; // Returns null if not found
     }
 
+    /**
+     * Retrieves all pets belonging to a specific owner
+     *
+     * @param ownerId
+     * @return List<Pet>
+     */
+    public java.util.List<Pet> getPetsByOwnerId(int ownerId) {
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return java.util.Collections.emptyList();
+        }
 
+        String sql = "SELECT * FROM pets WHERE owner_id = " + ownerId;
+        java.util.List<Pet> pets = new java.util.ArrayList<>();
+
+        try {
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            while (rs.next()) {
+                Pet pet = new Pet(
+                    rs.getString("name"),
+                    rs.getInt("age"),
+                    Pet.PetType.valueOf(rs.getString("type")),
+                    rs.getInt("owner_id")
+                );
+                pet.setPetId(rs.getInt("id")); // Set the actual pet ID
+                pets.add(pet);
+            }
+
+            statement.close();
+            System.out.println("Found " + pets.size() + " pets for owner ID: " + ownerId);
+        } catch (SQLException e) {
+            System.err.println("Error retrieving pets for owner: " + e.getMessage());
+        }
+
+        return pets;
+    }
+
+    /**
+     * Updates an existing Pet in the database
+     *
+     * @param pet
+     * @return boolean indicating success
+     */
+    public boolean updatePet(Pet pet) {
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return false;
+        }
+
+        String sql = "UPDATE pets SET " +
+                "name = '" + pet.getPetName() + "', " +
+                "age = " + pet.getPetAge() + ", " +
+                "type = '" + pet.getType().name() + "', " +
+                "owner_id = " + pet.getPetOwnerId() + " " +
+                "WHERE id = " + pet.getPetId();
+
+        try {
+            statement = connection.createStatement();
+            int affectedRows = statement.executeUpdate(sql);
+            
+            boolean success = affectedRows > 0;
+            if (success) {
+                System.out.println("Pet updated successfully with ID: " + pet.getPetId());
+            } else {
+                System.out.println("No Pet found with ID " + pet.getPetId());
+            }
+            
+            statement.close();
+            return success;
+        } catch (SQLException e) {
+            System.err.println("Error updating Pet: " + e.getMessage());
+            return false;
+        }
+    }
 
     // closes the connection when we are done with it
     public void closeConnection() {
