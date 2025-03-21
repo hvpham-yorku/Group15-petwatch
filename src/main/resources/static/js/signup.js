@@ -13,18 +13,48 @@ document.addEventListener("DOMContentLoaded", function () {
 
         console.log("🔄 Form submitted! Sending data...");
 
+        // Determine if this is a pet sitter signup based on the URL path
+        const isPetSitterSignup = window.location.pathname.includes("signup-sitter");
+        
         // Collect form data
         const formData = {
-            firstName: document.getElementById("firstName").value,
-            email: document.getElementById("email").value,
-            password: document.getElementById("password").value,
-            phoneNumber: document.getElementById("phoneNumber").value,
-            country: document.getElementById("country").value,
-            state: document.getElementById("stateProvince").value,
-            city: document.getElementById("city").value,
-            address: document.getElementById("address").value,
-            postalCode: document.getElementById("postalCode").value,
+            firstName: document.getElementById("firstName")?.value || "",
+            email: document.getElementById("email")?.value || "",
+            password: document.getElementById("password")?.value || "",
+            phoneNumber: document.getElementById("phoneNumber")?.value || "",
+            // Include role based on the current page
+            role: isPetSitterSignup ? "employee" : "owner",
         };
+        
+        // Add pet owner specific fields if present
+        if (document.getElementById("country")) {
+            formData.country = document.getElementById("country").value;
+        }
+        
+        if (document.getElementById("stateProvince")) {
+            formData.state = document.getElementById("stateProvince").value;
+        }
+        
+        if (document.getElementById("city")) {
+            formData.city = document.getElementById("city").value;
+        }
+        
+        if (document.getElementById("address")) {
+            formData.address = document.getElementById("address").value;
+        }
+        
+        if (document.getElementById("postalCode")) {
+            formData.postalCode = document.getElementById("postalCode").value;
+        }
+        
+        // Add pet sitter specific fields if present
+        if (document.getElementById("experience")) {
+            formData.experience = document.getElementById("experience").value;
+        }
+        
+        if (document.getElementById("bio")) {
+            formData.bio = document.getElementById("bio").value;
+        }
 
         console.log("📤 Sending data:", formData);
 
