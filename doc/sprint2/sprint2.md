@@ -24,4 +24,4 @@ The participants for this sprint are Arjon, Gjergj, Isha, Noah, and Sakshi.
 Arjon and Sakshi will continue working on the frontend to complete our sprint goals, while Gjergj, Isha, and Noah will be working on the backend.
 Additionally, Isha and Noah will be working on documentation (on Github and Trello).
 
-We decided on completing these user stories for sprint 2 as well felt that they will add relevant missing functionality to our project and make it a .
+We decided on completing these user stories for sprint 2 as well felt that they will add relevant missing functionality to our project.
