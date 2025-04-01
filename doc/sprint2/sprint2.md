@@ -1,7 +1,7 @@
 The goal of the sprint is to:
  
 1. Create a way for customers to view available pet sitters
-2. Create a way for customers to make job postings with priorities
+2. Create a way for customers to make job postings
 3. Create a way for pet sitters to view job postings
 4. Create a way for pet sitters to accept or decline a job request.
 5. Allow pet sitters to update their qualifications and contact information on their account
