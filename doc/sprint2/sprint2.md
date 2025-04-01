@@ -14,11 +14,10 @@ The user stories being used for the sprint, in order of priority, are:
 3. As a customer, I want to be able to leave reviews under pet sitters’ bio, so that I can let other users know about my experience.
 4. As a customer, I want to be able to indicate priority for a job, so that any urgent or last-minute jobs have higher priority.
 5. As a customer, I want to be able to request special accommodations, so that pets with special health requirements can be handled appropriately.
-6. As a pet sitter, I want to display my bio and general information, so that customers can see my availability and qualifications.
-7. As a pet sitter, I want to include my qualifications and contact information, so that customers have the necessary information available.
-8. As a pet sitter, I want to be able to browse through job postings on the notice board, so that I can volunteer for jobs that fit my schedule.
-9. As a pet sitter, I want to have the option to accept or decline a customer’s offer, so that I can handle personal commitments.
-10. As a pet sitter, I want to have access to the customer’s pet(s) information, so that I am aware of the job requirements.
+6. As a pet sitter, I want to include my qualifications and contact information, so that customers have the necessary information available.
+7. As a pet sitter, I want to be able to browse through job postings on the notice board, so that I can volunteer for jobs that fit my schedule.
+8. As a pet sitter, I want to have the option to accept or decline a customer’s offer, so that I can handle personal commitments.
+9. As a pet sitter, I want to have access to the customer’s pet(s) information, so that I am aware of the job requirements.
 
 The participants for this sprint are Arjon, Gjergj, Isha, Noah, and Sakshi. 
 Arjon and Sakshi will continue working on the frontend to complete our sprint goals, while Gjergj, Isha, and Noah will be working on the backend.
