@@ -27,4 +27,4 @@ Ensuring git repository updated with latest code.
 
 ## **Best and Worst Experiences**
 Best: Successful implementation of the SQLite-based database.
-Worst: Difficulty coordinating on working on the backend, conneting backend to frontend.
+Worst: Difficulty coordinating on working on the backend, connecting backend to frontend.
