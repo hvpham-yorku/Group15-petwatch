@@ -182,6 +182,90 @@ public class PetOwnerDAO {
         return petOwner;
     }
 
+    public void updateAddress(int petOwnerId, String newAddress) {
+        String sql = "UPDATE pet_owners SET address = '" + newAddress + "' WHERE id = " + petOwnerId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petOwnerId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updatePhone(int petOwnerId, String newPhone) {
+        String sql = "UPDATE pet_owners SET phone = '" + newPhone + "' WHERE id = " + petOwnerId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petOwnerId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateName(int petOwnerId, String newName) {
+        String sql = "UPDATE pet_owners SET name = '" + newName + "' WHERE id = " + petOwnerId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petOwnerId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCity(int petOwnerId, String newCity) {
+        String sql = "UPDATE pet_owners SET city = '" + newCity + "' WHERE id = " + petOwnerId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petOwnerId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateState(int petOwnerId, String newState) {
+        String sql = "UPDATE pet_owners SET state = '" + newState + "' WHERE id = " + petOwnerId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petOwnerId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateZipCode(int petOwnerId, String newZipCode) {
+        String sql = "UPDATE pet_owners SET zipCode = '" + newZipCode + "' WHERE id = " + petOwnerId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petOwnerId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCountry(int petOwnerId, String newCountry) {
+        String sql = "UPDATE pet_owners SET country = '" + newCountry + "' WHERE id = " + petOwnerId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petOwnerId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     // closes the connection when we are done with it
     public void closeConnection() {
         try {

@@ -265,6 +265,30 @@ public class UserDAO {
         return petOwnerId;
     }
 
+    public void updateEmail(int userId, String newEmail) {
+        String sql = "UPDATE users SET email = '" + newEmail + "' WHERE id = " + userId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + userId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updatePassword(int userId, String newPassword) {
+        String sql = "UPDATE users SET password = '" + newPassword + "' WHERE id = " + userId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + userId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
     // closes the connection when we are done with it
     public void closeConnection() {
         try {
