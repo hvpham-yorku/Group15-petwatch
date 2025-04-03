@@ -40,8 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
    const bioModalTitle = document.getElementById("bioModalTitle");
    const saveBioBtn = document.getElementById("saveBio");
    const bioTypeContainer = document.getElementById("bioTypeContainer");
-   const bioText = document.getElementById("bioText");
-   const selectedBioText = document.getElementById("selectedBioText");
 
     let selectedPetType = "";
     let editingPet = null;
@@ -304,48 +302,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => {
                 console.error("Error saving pet:", error);
                 alert("Error saving pet. Please try again.");
-            });
-        });
-    }
-
-    if (saveBioBtn) {
-        saveBioBtn.addEventListener("click", function () {
-
-            // Prepare sitter bio data
-            const sitterData = {
-                type: selectedPetType,
-                id: currentPetId ? String(currentPetId) : null // Convert to string for API
-            };
-
-            console.log("Saving petSitter with data:", sitterData);
-
-            // Save to server
-            fetch(`/api/pets?email=${encodeURIComponent(loggedInUser)}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    // Add CSRF token if needed
-                    ...(document.querySelector('meta[name="_csrf"]') ? {
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').getAttribute('content')
-                    } : {})
-                },
-                body: JSON.stringify(sitterData)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok: ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log("Bio saved successfully:", data);
-                // Reload pets to reflect changes
-                loadBio();
-                closeBioModal();
-            })
-            .catch(error => {
-                console.error("Error saving bio:", error);
-                alert("Error saving bio. Please try again.");
             });
         });
     }
