@@ -3,7 +3,10 @@ package com.petwatch.petwatch.DAO;
 import com.petwatch.petwatch.Model.Booking;
 import com.petwatch.petwatch.Model.Pet;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class BookingPetsDAO {
 

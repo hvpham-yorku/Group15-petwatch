@@ -111,12 +111,12 @@ public class UserDAO {
 
 
             if (rs.next()) {
-                 user = new User(
-                         rs.getInt("id"),
-                         rs.getString("email"),
-                         rs.getString("password"),
-                         User.Role.valueOf(rs.getString("role"))
-                 );
+                user = new User(
+                        rs.getInt("id"),
+                        rs.getString("email"),
+                        rs.getString("password"),
+                        User.Role.valueOf(rs.getString("role"))
+                );
             }
 
             statement.close();
@@ -191,7 +191,7 @@ public class UserDAO {
 
     /**
      * Gets the pet owner ID for a given user ID
-     * 
+     *
      * @param userId The user ID to look up
      * @return The pet owner ID, or -1 if not found or on error
      */
@@ -225,7 +225,7 @@ public class UserDAO {
 
     /**
      * Creates a pet owner profile for a given user
-     * 
+     *
      * @param userId The user ID to create the pet owner for
      * @param name The name for the pet owner (can be email if no real name available)
      * @param phone The phone number for the pet owner
@@ -240,7 +240,7 @@ public class UserDAO {
 
         String sql = "INSERT INTO pet_owners (user_id, name, phone, address) VALUES (" +
                 userId + ", '" + name + "', '" + phone + "', '" + address + "')";
-        
+
         int petOwnerId = -1;
 
         try {

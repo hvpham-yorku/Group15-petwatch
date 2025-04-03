@@ -36,12 +36,12 @@ public class PetSitterDAO {
         }
 
         String sql = "INSERT INTO pet_sitters (user_id, name, experience, availability, city, bio, phone) VALUES (" +
-                petSitter.getUserId() + ", '" + 
-                petSitter.getName() + "', '" + 
-                petSitter.getExperience() + "', '" + 
-                petSitter.getAvailability() + "', '" + 
-                petSitter.getCity() + "', '" + 
-                petSitter.getBio() + "', '" + 
+                petSitter.getUserId() + ", '" +
+                petSitter.getName() + "', '" +
+                petSitter.getExperience() + "', '" +
+                petSitter.getAvailability() + "', '" +
+                petSitter.getCity() + "', '" +
+                petSitter.getBio() + "', '" +
                 petSitter.getPhone() + "')";
 
         try {

@@ -35,13 +35,13 @@ public class PetOwnerDAO {
         }
 
         String sql = "INSERT INTO pet_owners (user_id, name, phone, address, country, state, city, postal_code) VALUES (" +
-                petOwner.getUserId() + ", '" + 
-                petOwner.getName() + "', '" + 
-                petOwner.getPhone() + "', '" + 
-                petOwner.getAddress() + "', '" + 
-                petOwner.getCountry() + "', '" + 
-                petOwner.getState() + "', '" + 
-                petOwner.getCity() + "', '" + 
+                petOwner.getUserId() + ", '" +
+                petOwner.getName() + "', '" +
+                petOwner.getPhone() + "', '" +
+                petOwner.getAddress() + "', '" +
+                petOwner.getCountry() + "', '" +
+                petOwner.getState() + "', '" +
+                petOwner.getCity() + "', '" +
                 petOwner.getPostalCode() + "')";
         try {
             statement = connection.createStatement();
