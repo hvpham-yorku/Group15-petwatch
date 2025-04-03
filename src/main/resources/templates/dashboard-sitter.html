@@ -34,11 +34,8 @@
         <h2 class="text-3xl font-bold">Your Sitter Profile</h2>
         <p class="text-gray-600">Update your bio, qualifications, and contact info.</p>
 
-        <div class="bg-white p-6 shadow-lg rounded-lg mt-6">
-            <h3 class="text-xl font-bold">👤 John Doe</h3>
-            <p class="text-gray-500">Professional Pet Sitter with 5 years of experience.</p>
-            <p class="mt-2 text-sm"><i class="fas fa-phone"></i> Contact: +1 234 567 890</p>
-            <button class="mt-4 px-4 py-2 bg-green-500 text-white rounded">Edit Profile</button>
+        <div id="bio-container">
+            <button class="edit-bio mt-4 px-4 py-2 bg-green-500 text-white rounded">Edit Profile</button>
         </div>
 
         <!-- Sitter Stats -->
@@ -64,6 +61,22 @@
                 <button class="mt-2 px-4 py-2 bg-red-500 text-white rounded">Decline</button>
             </li>
         </ul>
+    </div>
+
+    <!-- Edit Bio Modal -->
+    <div id="bioModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 hidden flex justify-center items-center">
+        <div class="bg-white p-6 rounded-lg w-96">
+            <h2 id="bioModalTitle" class="text-xl font-bold mb-4">Edit Sitter Profile</h2>
+            <!-- Bio Selection -->
+            <div id="bioTypeContainer" class="flex justify-center space-x-4 mb-4">
+                <h3 id="sitterName" class="text-xl font-bold">👤 John Doe</h3>
+                <p id="bio" class="text-gray-500">Professional Pet Sitter with 5 years of experience.</p>
+                <p id="sitterContact" class="mt-2 text-sm"><i class="fas fa-phone"></i> Contact: +1 234 567 890</p>
+            </div>
+
+            <button id="saveBio" class="w-full bg-blue-500 text-white p-2 rounded">Save</button>
+            <button onclick="closeBioModal()" class="w-full mt-2 bg-gray-300 p-2 rounded">Cancel</button>
+        </div>
     </div>
 
     <script src="/js/dashboard.js"></script>
