@@ -56,13 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
             loggedInUserId = data.id;
             console.log("Current user:", loggedInUser);
             console.log("Current user Id :", loggedInUserId);
-            if(data.role === "USER") {
-                console.log('load Pets');
-                loadPets(); // Load pets once we have the user email
-            } else {
-                console.log('load bio');
-                loadBio();
-            }
+            loadPets(); // Load pets once we have the user email
         })
         .catch(error => {
             console.error("Failed to get current user:", error);
@@ -116,46 +110,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    function loadBio(){
-        if (!loggedInUser) {
-            console.warn("No user email available, can't load pets");
-            return;
-        }
-
-        // Clear existing pets (except the "Add New Pet" button)
-        const existingSitter = bioContainer.querySelectorAll("div:not(:first-child)");
-
-        fetch('/api/sitter?userId='+ loggedInUserId)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Error fetching bio: ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(bio => {
-                console.log("Loaded bio:", bio);
-                const newSitterCard = document.createElement("div");
-                newSitterCard.classList.add("bg-white", "p-6", "shadow-lg", "rounded-lg", "mt-6");
-                newSitterCard.dataset.name = bio.name; // Store pet type in dataset for easy access
-                newSitterCard.dataset.bio = bio.bio;
-                newSitterCard.dataset.phone = bio.phone;
-
-                newSitterCard.innerHTML = `
-                        <h3 class="text-xl font-bold">👤 ${bio.name}</h3>
-                        <p class="text-gray-500">${bio.bio}</p>
-                        <p class="mt-2 text-sm"><i class="fas fa-phone"></i> Contact: +1 ${bio.phone}</p>
-                        <button class="edit-bio mt-4 px-4 py-2 bg-green-500 text-white rounded">Edit Profile</button>
-                `;
-                bioContainer.appendChild(newSitterCard);
-
-                // Reattach event listeners
-                attachEditButtons();
-            })
-            .catch(error => {
-                console.error("Error loading bio:", error);
-            });
-        }
-
+    
         // Determine which dashboard to show based on the URL path
         const currentPath = window.location.pathname;
         if (currentPath.includes('dashboard-owner')) {
@@ -226,15 +181,6 @@ document.addEventListener("DOMContentLoaded", function () {
             petModal.classList.remove("hidden");
         });
     }
-
-    // Sitter: Open modal for adding sitter bio
-        if (editBioBtn) {
-            editBioBtn.addEventListener("click", function () {
-                console.log("Edit Bio Clicked!");
-                //resetPetForm(false);
-                bioModal.classList.remove("hidden");
-            });
-        }
 
     // Owner: Select pet type
     function attachPetTypeButtons() {
