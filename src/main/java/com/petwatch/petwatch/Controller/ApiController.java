@@ -368,6 +368,17 @@ public class ApiController {
         
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/sitter")
+    public PetSitter getPetSitter(@RequestParam int userId) {
+        return petSitterDAO.getPetSitterByUserId(userId);
+    }
+
+    @PostMapping("/sitter")
+    public void getPetSitter(@RequestParam PetSitter petSitter) {
+        petSitterDAO.updatePetSitter(petSitter);
+        return;
+    }
     
     @DeleteMapping("/pets/{petId}")
     public ResponseEntity<Map<String, String>> deletePet(
