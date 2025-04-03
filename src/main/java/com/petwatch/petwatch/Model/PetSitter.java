@@ -1,135 +1,308 @@
-package com.petwatch.petwatch.Model;
+package com.petwatch.petwatch.DAO;
+import com.petwatch.petwatch.Model.PetSitter;
+import java.sql.*;
 
-public class PetSitter {
-    private int petSitterId;
-    private int userId;
-    private String name;
-    private String experience;
-    private String availability;
-    private double rating;
-    private String city;
-    private String bio;
-    private String phone;
+public class PetSitterDAO {
 
-    public PetSitter(int userId, String name, String experience, String availability) {
-        this.userId = userId;
-        this.name = name;
-        this.experience = experience;
-        this.availability = availability;
-        this.rating = 0;
-        this.city = "";
-        this.bio = "";
-        this.phone = "";
-    }
+    private static final String URL = "jdbc:sqlite:petwatch.db";
+    private Connection connection;
+    Statement statement;
 
-    public PetSitter(int userId, String name, String experience, String availability,
-                    String city, String bio, String phone) {
-        this.userId = userId;
-        this.name = name;
-        this.experience = experience;
-        this.availability = availability;
-        this.rating = 0;
-        this.city = city;
-        this.bio = bio;
-        this.phone = phone;
+    /**
+     * Establishes the database connection
+     */
+    public PetSitterDAO() {
+        try {
+            connection = DriverManager.getConnection(URL);
+            statement = connection.createStatement();
+            statement.execute("PRAGMA foreign_keys = ON;");
+            System.out.println("Database connected successfully.");
+        } catch (SQLException e) {
+            //e.printStackTrace();
+        }
     }
 
-    // ✅ Constructor for retrieving from the database (ID is provided)
-    public PetSitter(int id, int userId, String name, String experience, String availability, double rating) {
-        this.petSitterId = id;
-        this.userId = userId;
-        this.name = name;
-        this.experience = experience;
-        this.availability = availability;
-        this.rating = rating;
-        this.city = "";
-        this.bio = "";
-        this.phone = "";
-    }
-    
-    // Constructor for retrieving from the database with all fields
-    public PetSitter(int id, int userId, String name, String experience, String availability, double rating,
-                     String city, String bio, String phone) {
-        this.petSitterId = id;
-        this.userId = userId;
-        this.name = name;
-        this.experience = experience;
-        this.availability = availability;
-        this.rating = rating;
-        this.city = city;
-        this.bio = bio;
-        this.phone = phone;
+    /**
+     * Adds a PetSitter to the User table in the database
+     *
+     * @param petSitter
+     * @return userId
+     */
+    public int addPetSitter(PetSitter petSitter) {
+
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return -1;
+        }
+
+        String sql = "INSERT INTO pet_sitters (user_id, name, experience, availability, city, bio, phone) VALUES (" +
+                petSitter.getUserId() + ", '" +
+                petSitter.getName() + "', '" +
+                petSitter.getExperience() + "', '" +
+                petSitter.getAvailability() + "', '" +
+                petSitter.getCity() + "', '" +
+                petSitter.getBio() + "', '" +
+                petSitter.getPhone() + "')";
+
+        try {
+            statement = connection.createStatement();
+            int affectedRows = statement.executeUpdate(sql, Statement.RETURN_GENERATED_KEYS);
+
+            // Retrieve the generated ID and assign it to the user object
+            if (affectedRows > 0) {
+                ResultSet rs = statement.getGeneratedKeys();
+
+                if (rs.next()) {
+                    petSitter.setPetSitterId(rs.getInt(1));  // Assign generated ID
+                    System.out.println("Pet Sitter added successfully with ID: " + petSitter.getPetSitterId());
+                }
+
+            }
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("Error adding pet sitter: " + e.getMessage());
+            System.err.println("SQL: " + sql);
+            e.printStackTrace();
+        }
+
+        return petSitter.getPetSitterId();
+
     }
 
-    public int getPetSitterId() {
-        return petSitterId;
+    /**
+     * Removes PetSitter from the database using Id
+     *
+     * @param petSitterId
+     */
+    public void removePetSitter(int petSitterId) {
+
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return;
+        }
+
+        String sql = "DELETE FROM pet_sitters WHERE id = " + petSitterId;
+
+        try {
+            statement = connection.createStatement();
+            int affectedRows = statement.executeUpdate(sql);
+            if (affectedRows > 0) {
+                System.out.println("Pet Sitter removed successfully.");
+            } else {
+                System.out.println("No Pet Sitters found with ID " + petSitterId);
+            }
+            statement.close();
+        } catch (SQLException e) {
+            //e.printStackTrace();
+        }
     }
 
-    public void setPetSitterId(int petSitterId) {
-        this.petSitterId = petSitterId;
+    /**
+     * Searches the table in the database for a specific user matching the ID
+     *
+     * @param petSitterId
+     * @return User
+     */
+    public PetSitter getPetSitterById(int petSitterId) {
+
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return null;
+        }
+
+
+        String sql = "SELECT * FROM pet_sitters WHERE id = " + petSitterId;
+        PetSitter petSitter = null;
+
+        try {
+
+            statement = connection.createStatement();
+
+            ResultSet rs = statement.executeQuery(sql);
+
+
+            if (rs.next()) {
+                petSitter = new PetSitter(
+                        rs.getInt("id"),
+                        rs.getInt("user_id"),
+                        rs.getString("name"),
+                        rs.getString("experience"),
+                        rs.getString("availability"),
+                        rs.getDouble("rating"),
+                        rs.getString("city"),
+                        rs.getString("bio"),
+                        rs.getString("phone")
+                );
+            }
+
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("Error retrieving PetSitter: " + e.getMessage());
+        }
+
+        return petSitter; // Returns null if not found
     }
 
-    public int getUserId() {
-        return userId;
+    /**
+     * Gets a PetSitter record by user ID
+     *
+     * @param userId The user ID to search for
+     * @return PetSitter object or null if not found
+     */
+    public PetSitter getPetSitterByUserId(int userId) {
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return null;
+        }
+
+        String sql = "SELECT * FROM pet_sitters WHERE user_id = " + userId;
+        PetSitter petSitter = null;
+
+        try {
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            if (rs.next()) {
+                petSitter = new PetSitter(
+                        rs.getInt("id"),
+                        rs.getInt("user_id"),
+                        rs.getString("name"),
+                        rs.getString("experience"),
+                        rs.getString("availability"),
+                        rs.getDouble("rating"),
+                        rs.getString("city"),
+                        rs.getString("bio"),
+                        rs.getString("phone")
+                );
+            }
+
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("Error retrieving PetSitter by user ID: " + e.getMessage());
+        }
+
+        return petSitter;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void updatePetSitter(PetSitter petSitter) {
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return;
+        }
+
+        String sql = "UPDATE pet_sitters SET" +
+                " bio='" + petSitter.getBio() + "', " +
+                " phone='" + petSitter.getPhone() + "', " +
+                " experience='" + petSitter.getExperience() + "' " +
+                " WHERE user_id = " +  petSitter.getUserId();
+        System.out.println("sql update : " + sql);
+        try {
+            statement = connection.createStatement();
+            statement.executeUpdate(sql);
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("Error updating PetSitter by user ID: " + e.getMessage());
+        }
+        return;
     }
 
-    public String getName() {
-        return name;
+    public void updateName(int petSitterId, String newName) {
+        String sql = "UPDATE pet_sitters SET name = '" + newName + "' WHERE id = " + petSitterId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petSitterId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void updateExperience(int petSitterId, int experience) {
+        String sql = "UPDATE pet_sitters SET experience = " + experience + " WHERE id = " + petSitterId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petSitterId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public String getExperience() {
-        return experience;
+    public void updateAvailability(int petSitterId, boolean availability) {
+        String sql = "UPDATE pet_sitters SET availability = " + (availability ? 1 : 0) + " WHERE id = " + petSitterId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petSitterId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setExperience(String experience) {
-        this.experience = experience;
+    public void updateRating(int petSitterId, double rating) {
+        String sql = "UPDATE pet_sitters SET rating = " + rating + " WHERE id = " + petSitterId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petSitterId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public String getAvailability() {
-        return availability;
+    public void updateCity(int petSitterId, String city) {
+        String sql = "UPDATE pet_sitters SET city = '" + city + "' WHERE id = " + petSitterId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petSitterId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setAvailability(String availability) {
-        this.availability = availability;
+    public void updateBio(int petSitterId, String bio) {
+        String sql = "UPDATE pet_sitters SET bio = '" + bio + "' WHERE id = " + petSitterId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petSitterId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public double getRating() {
-        return rating;
+    public void updatePhone(int petSitterId, String phone) {
+        String sql = "UPDATE pet_sitters SET phone = '" + phone + "' WHERE id = " + petSitterId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petSitterId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-    
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getBio() {
-        return bio;
+    // closes the connection when we are done with it
+    public void closeConnection() {
+        try {
+            if (connection != null) {
+                connection.close();
+                System.out.println("Database connection closed.");
+            }
+        } catch (SQLException e) {
+            //e.printStackTrace();
+        }
     }
 
-    public void setBio(String bio) {
-        this.bio = bio;
-    }
 
-    public String getPhone() {
-        return phone;
-    }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
-    }
+
 }
