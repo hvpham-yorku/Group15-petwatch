@@ -69,6 +69,8 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Failed to get current user:", error);
         });
 
+    // Load pets from the server
+
     // Determine which dashboard to show based on the URL path
     const currentPath = window.location.pathname;
     if (currentPath.includes('dashboard-owner')) {
@@ -109,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
     attachLogoutListener();
 
     if (saveBioBtn) {
-        saveBioBtn.addEventListener("click", function () {
+        saveBioBtn.addEventListener("click", async function () {
             /*if (!selectedPetType) {
                 alert("Please select a pet type before saving.");
                 return;
@@ -117,17 +119,6 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Calling saving.");
 
             // Prepare pet data
-            /*
-               this.userId = userId;
-                    this.name = name;
-                    this.experience = experience;
-                    this.availability = availability;
-                    this.rating = 0;
-                    this.city = city;
-                    this.bio = bio;
-                    this.phone = phone;
-
-            */
             const petSitter = {
                 userId: loggedInUserId,
                 phone: document.getElementById("phoneNumber")?.value || "444-444-4444",
@@ -142,7 +133,7 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log("Saving Profile with data:", petSitter);
 
             // Save to server
-            fetch("/api/sitter", {
+            await fetch("/api/sitter", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -154,7 +145,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 body: JSON.stringify(petSitter)
             })
             .then(response => {
-                console.log("Sitter Profile saved successfully:", response);
+                alert("Sitter Profile saved successfully:");
                 if (!response.ok) {
                     throw new Error('Network response was not ok: ' + response.statusText);
                 }
@@ -165,11 +156,11 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(data => {
                 console.log("Sitter Profile saved data:", data);
-            })
-            .catch(error => {
+            });
+            /*.catch(error => {
                 console.error("Error saving pet:", error);
                 alert("Error saving pet. Please try again.");
-            });
+            });*/
         });
     }
 
