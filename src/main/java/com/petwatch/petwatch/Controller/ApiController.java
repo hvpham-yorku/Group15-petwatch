@@ -26,6 +26,7 @@ public class ApiController {
     // Use DAOs for database access instead of in-memory storage
     private final UserDAO userDAO;
     private final PetDAO petDAO;
+    private final PetSitterDAO petSitterDAO;
     
     @Autowired
     private UserDetailsService userDetailsService;
@@ -37,6 +38,7 @@ public class ApiController {
     public ApiController() {
         this.userDAO = new UserDAO();
         this.petDAO = new PetDAO();
+        this.petSitterDAO = new PetSitterDAO();
         System.out.println("ApiController initialized with database access");
     }
     
