@@ -184,6 +184,25 @@ public class PetSitterDAO {
         return petSitter;
     }
 
+    public void updatePetSitter(PetSitter petSitter) {
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return;
+        }
+
+        String sql = "UPDATE pet_sitters SET bio=" + petSitter.getBio() + "WHERE user_id = " +  petSitter.getUserId();
+
+        try {
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("Error updating PetSitter by user ID: " + e.getMessage());
+        }
+        return;
+    }
+
     public void updateName(int petSitterId, String newName) {
         String sql = "UPDATE pet_sitters SET name = '" + newName + "' WHERE id = " + petSitterId;
         try {
