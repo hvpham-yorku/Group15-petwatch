@@ -190,12 +190,15 @@ public class PetSitterDAO {
             return;
         }
 
-        String sql = "UPDATE pet_sitters SET bio=" + petSitter.getBio() + "WHERE user_id = " +  petSitter.getUserId();
-
+        String sql = "UPDATE pet_sitters SET" +
+                " bio='" + petSitter.getBio() + "', " +
+                " phone='" + petSitter.getPhone() + "', " +
+                " experience='" + petSitter.getExperience() + "' " +
+                " WHERE user_id = " +  petSitter.getUserId();
+        System.out.println("sql update : " + sql);
         try {
             statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(sql);
-
+            statement.executeUpdate(sql);
             statement.close();
         } catch (SQLException e) {
             System.err.println("Error updating PetSitter by user ID: " + e.getMessage());
