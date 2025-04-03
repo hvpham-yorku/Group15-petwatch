@@ -26,7 +26,7 @@ public class ApiController {
     // Use DAOs for database access instead of in-memory storage
     private final UserDAO userDAO;
     private final PetDAO petDAO;
-    
+    private final PetSitterDAO petSitterDAO;
     @Autowired
     private UserDetailsService userDetailsService;
     
@@ -37,6 +37,7 @@ public class ApiController {
     public ApiController() {
         this.userDAO = new UserDAO();
         this.petDAO = new PetDAO();
+        this.petSitterDAO = new PetSitterDAO();
         System.out.println("ApiController initialized with database access");
     }
     
@@ -65,10 +66,11 @@ public class ApiController {
         String email = principal.getName();
         User user = userDAO.getUserByEmail(email);
         String role = (user != null) ? user.getRole().toString() : "";
-        
+        int id = (user != null) ? user.getId() : 0;
         return ResponseEntity.ok(Map.of(
             "email", email,
-            "role", role
+            "role", role,
+                "id", id+""
         ));
     }
     
@@ -381,5 +383,17 @@ public class ApiController {
         } catch (NumberFormatException e) {
             return ResponseEntity.badRequest().body(Map.of("status", "error", "message", "Invalid pet ID"));
         }
+    }
+
+    @GetMapping("/sitter")
+    public PetSitter getPetSitter(@RequestParam int userId) {
+        return petSitterDAO.getPetSitterByUserId(userId);
+    }
+
+    @PostMapping("/sitter")
+    public void  savePetSitter(@RequestBody PetSitter petSitter) {
+        System.out.println("Inside update sitter profile...");
+        petSitterDAO.updatePetSitter(petSitter);
+        return;
     }
 } 
