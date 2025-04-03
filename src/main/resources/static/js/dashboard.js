@@ -25,8 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const addNewPetBtn = document.querySelector(".add-new-pet"); // "Add New Pet" button
     const petContainer = document.querySelector(".pet-container"); // Pet container grid
     const requestList = document.getElementById("request-list"); // Sitter's request list
-    const bioContainer = document.getElementById("bio-container");
-    const editBioBtn = document.querySelector(".edit-bio"); // "Edit Bio" button
 
     // Modal Elements (For Owner)
     const petModal = document.getElementById("petModal");
@@ -34,28 +32,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const savePetBtn = document.getElementById("savePet");
     const petTypeContainer = document.getElementById("petTypeContainer");
     const selectedPetTypeText = document.getElementById("selectedPetTypeText");
-
-   // Modal Elements (For Sitter)
-   const bioModal = document.getElementById("bioModal");
-   const bioModalTitle = document.getElementById("bioModalTitle");
-   const saveBioBtn = document.getElementById("saveBio");
-   const bioTypeContainer = document.getElementById("bioTypeContainer");
-
+    
     let selectedPetType = "";
     let editingPet = null;
     let currentPetId = null;
     let loggedInUser = ""; // Will be set from the server side
-    let loggedInUserId = 0;
-
+    
     // Get current user email from a simple API endpoint
     fetch('/api/current-user')
         .then(response => response.json())
         .then(data => {
-            console.log('User data :', data);
             loggedInUser = data.email;
-            loggedInUserId = data.id;
             console.log("Current user:", loggedInUser);
-            console.log("Current user Id :", loggedInUserId);
             loadPets(); // Load pets once we have the user email
         })
         .catch(error => {
@@ -70,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         
         // Clear existing pets (except the "Add New Pet" button)
-        const existingPets = petContainer.querySelectorAll("div");
+        const existingPets = petContainer.querySelectorAll("div:not(:first-child)");
         existingPets.forEach(pet => pet.remove());
         
         // Call API to get pets for the current user
@@ -110,22 +98,21 @@ document.addEventListener("DOMContentLoaded", function () {
             });
     }
 
-    
-        // Determine which dashboard to show based on the URL path
-        const currentPath = window.location.pathname;
-        if (currentPath.includes('dashboard-owner')) {
-            console.log("Showing Owner Dashboard");
-            if (ownerDashboard) ownerDashboard.classList.remove("hidden");
-            if (ownerBtn) ownerBtn.classList.remove("hidden");
-            // Load pets when dashboard is shown (will be called after getting user email)
-        } else if (currentPath.includes('dashboard-sitter')) {
-            console.log("Showing Sitter Dashboard");
-            if (sitterDashboard) sitterDashboard.classList.remove("hidden");
-            if (sitterBtn) sitterBtn.classList.remove("hidden");
-        } else {
-            console.log("Invalid dashboard path! Redirecting to login.");
-            window.location.href = "/login-choice"; // Redirect if path is unexpected
-        }
+    // Determine which dashboard to show based on the URL path
+    const currentPath = window.location.pathname;
+    if (currentPath.includes('dashboard-owner')) {
+        console.log("Showing Owner Dashboard");
+        if (ownerDashboard) ownerDashboard.classList.remove("hidden");
+        if (ownerBtn) ownerBtn.classList.remove("hidden");
+        // Load pets when dashboard is shown (will be called after getting user email)
+    } else if (currentPath.includes('dashboard-sitter')) {
+        console.log("Showing Sitter Dashboard");
+        if (sitterDashboard) sitterDashboard.classList.remove("hidden");
+        if (sitterBtn) sitterBtn.classList.remove("hidden");
+    } else {
+        console.log("Invalid dashboard path! Redirecting to login.");
+        window.location.href = "/login-choice"; // Redirect if path is unexpected
+    }
 
     // Logout functionality - now using Spring Security logout form
     function attachLogoutListener() {
@@ -255,11 +242,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Close modal function
     window.closeModal = function () {
         petModal.classList.add("hidden");
-    };
-
-    // Close modal function
-    window.closeBioModal = function () {
-        bioModal.classList.add("hidden");
     };
     
     // Function to attach event listeners to Edit Pet buttons
