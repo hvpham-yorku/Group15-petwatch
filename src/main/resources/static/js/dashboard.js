@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const addNewPetBtn = document.querySelector(".add-new-pet"); // "Add New Pet" button
     const petContainer = document.querySelector(".pet-container"); // Pet container grid
     const requestList = document.getElementById("request-list"); // Sitter's request list
+    const bioContainer = document.getElementById("bio-container");
 
     // Modal Elements (For Owner)
     const petModal = document.getElementById("petModal");
@@ -32,35 +33,53 @@ document.addEventListener("DOMContentLoaded", function () {
     const savePetBtn = document.getElementById("savePet");
     const petTypeContainer = document.getElementById("petTypeContainer");
     const selectedPetTypeText = document.getElementById("selectedPetTypeText");
-    
+
+   // Modal Elements (For Sitter)
+   const bioModal = document.getElementById("bioModal");
+   const bioModalTitle = document.getElementById("bioModalTitle");
+   const saveBioBtn = document.getElementById("saveBio");
+   const bioTypeContainer = document.getElementById("bioTypeContainer");
+   const bioText = document.getElementById("bioText");
+   const selectedBioText = document.getElementById("selectedBioText");
+
     let selectedPetType = "";
     let editingPet = null;
     let currentPetId = null;
     let loggedInUser = ""; // Will be set from the server side
-    
+    let loggedInUserId = 0;
+
     // Get current user email from a simple API endpoint
     fetch('/api/current-user')
         .then(response => response.json())
         .then(data => {
+            console.log('User data :', data);
             loggedInUser = data.email;
+            loggedInUserId = data.id;
             console.log("Current user:", loggedInUser);
-            loadPets(); // Load pets once we have the user email
+            console.log("Current user Id :", loggedInUserId);
+            if(data.role === "EMPLOYEE") {
+                console.log('load bio');
+                loadBio();
+            } else {
+                console.log('load Pets');
+                loadPets(); // Load pets once we have the user email
+            }
         })
         .catch(error => {
             console.error("Failed to get current user:", error);
         });
-    
+
     // Load pets from the server
     function loadPets() {
         if (!loggedInUser) {
             console.warn("No user email available, can't load pets");
             return;
         }
-        
+
         // Clear existing pets (except the "Add New Pet" button)
         const existingPets = petContainer.querySelectorAll("div:not(:first-child)");
         existingPets.forEach(pet => pet.remove());
-        
+
         // Call API to get pets for the current user
         fetch(`/api/pets?email=${encodeURIComponent(loggedInUser)}`)
             .then(response => {
@@ -71,25 +90,25 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .then(pets => {
                 console.log("Loaded pets:", pets);
-                
+
                 // Add saved pets to the container
                 pets.forEach(pet => {
                     // Ensure petId is treated as a number
                     const petId = pet.id ? parseInt(pet.id, 10) : '';
                     console.log(`Creating pet card for ${pet.type} with ID: ${petId}`);
-                    
+
                     const newPetCard = document.createElement("div");
                     newPetCard.classList.add("bg-white", "p-4", "shadow", "rounded-lg");
                     newPetCard.dataset.petId = petId; // Store pet ID for editing/deleting
                     newPetCard.dataset.petType = pet.type; // Store pet type in dataset for easy access
-                    
+
                     newPetCard.innerHTML = `
                         <h3 class="text-lg font-bold text-center pet-name">${pet.type}</h3>
                         <button class="edit-pet w-full mt-4 px-4 py-2 bg-blue-500 text-white rounded">Edit Pet</button>
                     `;
                     petContainer.appendChild(newPetCard);
                 });
-                
+
                 // Reattach event listeners
                 attachEditButtons();
             })
@@ -141,14 +160,14 @@ document.addEventListener("DOMContentLoaded", function () {
     function resetPetForm(isEditing = false, petType = null, petId = null) {
         // Update form title
         modalTitle.innerText = isEditing ? "Edit Pet" : "Add New Pet";
-        
+
         // Reset pet ID
         currentPetId = petId;
-        
+
         // Reset selection
         selectedPetType = petType || "";
         selectedPetTypeText.innerText = selectedPetType ? `Selected Pet: ${selectedPetType}` : "Selected Pet: None";
-        
+
         // Reset selection styling on buttons
         document.querySelectorAll(".pet-type-button").forEach((btn) => {
             btn.classList.remove("ring-4", "ring-blue-300");
@@ -156,7 +175,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 btn.classList.add("ring-4", "ring-blue-300");
             }
         });
-        
+
         console.log(`Pet form reset for ${isEditing ? 'editing' : 'creation'}, type: ${selectedPetType}, ID: ${currentPetId}`);
     }
 
@@ -175,15 +194,15 @@ document.addEventListener("DOMContentLoaded", function () {
             btn.addEventListener("click", function () {
                 const newType = this.getAttribute("data-type");
                 console.log(`Changing pet type to: ${newType}, previous type was: ${selectedPetType}, current pet ID: ${currentPetId}`);
-                
+
                 // Remove selection styling from all buttons
                 document.querySelectorAll(".pet-type-button").forEach((b) => {
                     b.classList.remove("ring-4", "ring-blue-300");
                 });
-                
+
                 // Add selection styling to clicked button
                 this.classList.add("ring-4", "ring-blue-300");
-                
+
                 // Update selected pet type
                 selectedPetType = newType;
                 selectedPetTypeText.innerText = "Selected Pet: " + selectedPetType;
@@ -199,15 +218,15 @@ document.addEventListener("DOMContentLoaded", function () {
                 alert("Please select a pet type before saving.");
                 return;
             }
-            
+
             // Prepare pet data
             const petData = {
                 type: selectedPetType,
                 id: currentPetId ? String(currentPetId) : null // Convert to string for API
             };
-            
+
             console.log("Saving pet with data:", petData);
-            
+
             // Save to server
             fetch(`/api/pets?email=${encodeURIComponent(loggedInUser)}`, {
                 method: 'POST',
@@ -243,7 +262,7 @@ document.addEventListener("DOMContentLoaded", function () {
     window.closeModal = function () {
         petModal.classList.add("hidden");
     };
-    
+
     // Function to attach event listeners to Edit Pet buttons
     function attachEditButtons() {
         document.querySelectorAll(".edit-pet").forEach((btn) => {
@@ -252,22 +271,128 @@ document.addEventListener("DOMContentLoaded", function () {
                 const petType = petCard.dataset.petType; // Get pet type from the dataset attribute
                 const petIdStr = petCard.dataset.petId;
                 const petId = petIdStr ? parseInt(petIdStr, 10) : null;
-                
+
                 console.log(`Edit button clicked for pet: ${petType} with ID: ${petId}`);
-                
+
                 if (isNaN(petId)) {
                     console.error("Invalid pet ID:", petIdStr);
                     alert("Error: This pet has an invalid ID and cannot be edited.");
                     return;
                 }
-                
+
                 // Set editing mode and reset form
                 editingPet = petCard;
                 resetPetForm(true, petType, petId);
-                
+
                 // Show modal
                 petModal.classList.remove("hidden");
             });
         });
     }
+
+    if (saveBioBtn) {
+        saveBioBtn.addEventListener("click", function () {
+            if (!selectedPetType) {
+                alert("Please select a pet type before saving.");
+                return;
+            }
+
+            // Prepare pet data
+            const petData = {
+                type: selectedPetType,
+                id: currentPetId ? String(currentPetId) : null // Convert to string for API
+            };
+
+            console.log("Saving pet with data:", petData);
+
+            // Save to server
+            fetch(`/api/sitter?email=${encodeURIComponent(loggedInUser)}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    // Add CSRF token if needed
+                    ...(document.querySelector('meta[name="_csrf"]') ? {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="_csrf"]').getAttribute('content')
+                    } : {})
+                },
+                body: JSON.stringify(petData)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log("Pet saved successfully:", data);
+                // Reload pets to reflect changes
+                loadBio();
+                closeBioModal();
+            })
+            .catch(error => {
+                console.error("Error saving pet:", error);
+                alert("Error saving pet. Please try again.");
+            });
+        });
+    }
+
+    function attachEditBioButton() {
+        const editBioBtn = document.querySelector(".edit-bio"); // "Edit Bio" button
+        // Sitter: Open modal for adding sitter bio
+        if (editBioBtn) {
+            editBioBtn.addEventListener("click", function () {
+                console.log("Edit Bio Clicked!");
+                //resetPetForm(false);
+                bioModal.classList.remove("hidden");
+            });
+        }
+    }
+
+    function loadBio(){
+        if (!loggedInUser) {
+            console.warn("No user email available, can't load pets");
+            return;
+        }
+
+        // Clear existing pets (except the "Add New Pet" button)
+        const existingSitter = bioContainer.querySelectorAll("div:not(:first-child)");
+
+        fetch('/api/sitter?userId='+ loggedInUserId)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error fetching bio: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(bio => {
+                console.log("Loaded bio:", bio);
+                const newSitterCard = document.createElement("div");
+                //newSitterCard.classList.add("bg-white", "p-4", "shadow", "rounded-lg");
+                newSitterCard.dataset.name = bio.name; // Store pet type in dataset for easy access
+                newSitterCard.dataset.bio = bio.bio;
+                newSitterCard.dataset.phone = bio.phone;
+
+                newSitterCard.innerHTML = `
+                    <div class="bg-white p-6 shadow-lg rounded-lg mt-6">
+                        <h3 class="text-xl font-bold">👤 ${bio.name}</h3>
+                        <p class="text-gray-500">${bio.bio}</p>
+                        <p class="mt-2 text-sm"><i class="fas fa-phone"></i> Contact: +1 ${bio.phone}</p>
+                        <button class="edit-bio mt-4 px-4 py-2 bg-green-500 text-white rounded">Edit Profile</button>
+                    </div>
+                `;
+                bioContainer.appendChild(newSitterCard);
+
+                // Reattach event listeners
+                attachEditBioButton();
+            })
+            .catch(error => {
+                console.error("Error loading bio:", error);
+            });
+        }
+
+    // Close modal function
+    window.closeBioModal = function () {
+        bioModal.classList.add("hidden");
+    };
+
 });
