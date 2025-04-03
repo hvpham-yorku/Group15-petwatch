@@ -14,8 +14,6 @@ The user stories being used for the sprint, in order of priority, are:
 4. As a pet sitter, I want to have the option to accept or decline a customer’s offer, so that I can handle personal commitments.
 5. As a pet sitter, I want to include my qualifications and contact information, so that customers have the necessary information available.
 6. As a pet sitter, I want to have access to the customer’s pet(s) information, so that I am aware of the job requirements.
-7. As a customer, I want to be able to indicate priority for a job, so that any urgent or last-minute jobs have higher priority.
-8. As a customer, I want to be able to leave reviews under pet sitters’ bio, so that I can let other users know about my experience.
 
 The participants for this sprint are Arjon, Gjergj, Isha, Noah, and Sakshi. 
 Arjon and Sakshi will continue working on the frontend to complete our sprint goals, while Gjergj, Isha, and Noah will be working on the backend.
