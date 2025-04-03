@@ -15,3 +15,12 @@ Sprint 2 Standups - Noah
 | 29 March 2025                  | 2         | 4           | Conducted sprint 1 retrospective meeting                               | Planning out sprint goals and task distribution as a team                   | March 30                      | Planning a meeting time that works for all team members              |
 | 30 March 2025                  | 2         | 5           | Discussed and planned out goals for the sprint with team members, finalized task distribution for tteam members                               | Help with completion of required backend functionality and work required product documentation                  | April 2                      | Some documentation needs the project completed to be finished             |
 | 3 April 2025                 | 2         | 6           | Completed required backend and product documentation                               | Finalize project, schedule and prepare for demo with the TA                   | April 3                      | Scheduling a time that works for every team member              |
+
+
+Sprint 2 Standups - Gjergj
+
+| Standup Date       | Sprint # | Standup # | Worked on since last standup | Committed to next | Estimated Completion | Any Blockers |
+|--------------------|---------|-----------|-------------------------------|-------------------|----------------------|--------------|
+| 21 March 2025                  | 2         | 7           | Updated DAO files to support attribute updates in the database                               | Begin implementing BookingPetsDAO to associate bookings with pets                   | March 24                      | Getting in tocuh with group members who have busy schedules              |
+| 25 March 2025                  | 2         | 8           | Created BookingPetsDAO to link booking information with pets                               | Working on the Jira breakdown chart                  | April 3                      | Some documentation needs the project completed to be finished             |
+|                  | 2         | 9           |                                | Finalize project, schedule and prepare for demo with the TA                   | April 3                      | Scheduling a time that works for every team member              |
