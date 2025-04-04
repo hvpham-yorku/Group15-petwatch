@@ -5,7 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sitter Dashboard - PetWatch</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log("DOM fully loaded");
+            console.log("jobRequestsList exists:", !!document.getElementById('jobRequestsList'));
+            console.log("myJobsList exists:", !!document.getElementById('myJobsList'));
+            console.log("sitterDashboard exists:", !!document.getElementById('sitterDashboard'));
+        });
+    </script>
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+       
+        .icon-fallback {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        
+        .line-clamp-2 {
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+    </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex">
 
@@ -66,6 +89,58 @@
         </ul>
     </div>
 
+<<<<<<< Updated upstream
     <script src="/js/dashboard.js"></script>
+=======
+    <!-- Pet Sitting Requests Container -->
+    <div class="bg-white p-6 rounded-lg shadow-md mb-6">
+        <h2 class="text-xl font-semibold mb-4">Pet Sitting Requests</h2>
+        <ul id="jobRequestsList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <!-- Job requests will be loaded here by JS -->
+        </ul>
+    </div>
+    
+    <!-- My Jobs Container -->
+    <div class="bg-white p-6 rounded-lg shadow-md">
+        <h2 class="text-xl font-semibold mb-4">My Accepted Jobs</h2>
+        <ul id="myJobsList" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            <!-- Accepted jobs will be loaded here by JS -->
+        </ul>
+    </div>
+</div>
+
+<!-- Sitter Edit Modal -->
+<div id="sitterModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex justify-center items-center z-50">
+    <div class="bg-white p-6 rounded-lg shadow-lg w-96">
+        <h2 class="text-xl font-bold mb-4 text-gray-800">Edit Sitter Profile</h2>
+        <form id="editSitterForm" class="space-y-4">
+            <div>
+                <label for="sitterName" class="block text-sm font-medium text-gray-700">Full Name</label>
+                <input type="text" id="sitterName" class="mt-1 block w-full border border-gray-300 rounded p-2" />
+            </div>
+
+            <div>
+                <label for="sitterBio" class="block text-sm font-medium text-gray-700">Bio</label>
+                <textarea id="sitterBio" rows="3" class="mt-1 block w-full border border-gray-300 rounded p-2"></textarea>
+            </div>
+            <div>
+                <label for="sitterPhone" class="block text-sm font-medium text-gray-700">Phone</label>
+                <input type="tel" id="sitterPhone" class="mt-1 block w-full border border-gray-300 rounded p-2" />
+                <!-- Profile Image Upload -->
+                <label class="block text-sm font-medium text-gray-700 mt-4" for="sitterImage">Profile Image</label>
+                <input type="file" id="sitterImage" class="mt-1 block w-full border border-gray-300 p-2 rounded" accept="image/*" />
+
+            </div>
+
+            <div class="flex justify-between">
+                <button type="button" onclick="closeSitterModal()" class="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="/js/dashboard.js"></script>
+>>>>>>> Stashed changes
 </body>
 </html>

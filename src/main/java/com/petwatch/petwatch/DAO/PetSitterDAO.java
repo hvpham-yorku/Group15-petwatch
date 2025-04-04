@@ -184,6 +184,153 @@ public class PetSitterDAO {
         return petSitter;
     }
 
+<<<<<<< Updated upstream
+=======
+    public void updatePetSitter(PetSitter petSitter) {
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return;
+        }
+
+        String sql = "UPDATE pet_sitters SET " +
+                    "name = '" + petSitter.getName() + "', " +
+                    "bio = '" + petSitter.getBio() + "', " +
+                    "phone = '" + petSitter.getPhone() + "', " +
+                    "city = '" + petSitter.getCity() + "', " +
+                    "experience = '" + petSitter.getExperience() + "', " +
+                    "availability = '" + petSitter.getAvailability() + "' " +
+                    "WHERE id = " + petSitter.getPetSitterId();
+
+        try {
+            statement = connection.createStatement();
+            int rowsUpdated = statement.executeUpdate(sql);
+            
+            if (rowsUpdated > 0) {
+                System.out.println("Pet sitter updated successfully with ID: " + petSitter.getPetSitterId());
+            } else {
+                System.out.println("No pet sitter found with ID: " + petSitter.getPetSitterId());
+            }
+            
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("Error updating pet sitter: " + e.getMessage());
+            System.err.println("SQL: " + sql);
+            e.printStackTrace();
+        }
+    }
+
+    public void updateName(int petSitterId, String newName) {
+        String sql = "UPDATE pet_sitters SET name = '" + newName + "' WHERE id = " + petSitterId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petSitterId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateExperience(int petSitterId, int experience) {
+        String sql = "UPDATE pet_sitters SET experience = " + experience + " WHERE id = " + petSitterId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petSitterId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateAvailability(int petSitterId, boolean availability) {
+        String sql = "UPDATE pet_sitters SET availability = " + (availability ? 1 : 0) + " WHERE id = " + petSitterId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petSitterId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateRating(int petSitterId, double rating) {
+        String sql = "UPDATE pet_sitters SET rating = " + rating + " WHERE id = " + petSitterId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petSitterId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCity(int petSitterId, String city) {
+        String sql = "UPDATE pet_sitters SET city = '" + city + "' WHERE id = " + petSitterId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petSitterId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateBio(int petSitterId, String bio) {
+        String sql = "UPDATE pet_sitters SET bio = '" + bio + "' WHERE id = " + petSitterId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petSitterId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updatePhone(int petSitterId, String phone) {
+        String sql = "UPDATE pet_sitters SET phone = '" + phone + "' WHERE id = " + petSitterId;
+        try {
+            int rowsUpdated = statement.executeUpdate(sql);
+            if (rowsUpdated == 0) {
+                throw new SQLException("Failed to update: No record found for ID = " + petSitterId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    
+    
+    public int getPetSitterIdByUserId(int userId) {
+        if (connection == null) {
+            System.err.println("Error: Database connection is not available.");
+            return -1;
+        }
+
+        String sql = "SELECT id FROM pet_sitters WHERE user_id = " + userId;
+        int petSitterId = -1;
+
+        try {
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(sql);
+
+            if (rs.next()) {
+                petSitterId = rs.getInt("id");
+            }
+
+            statement.close();
+        } catch (SQLException e) {
+            System.err.println("Error retrieving pet sitter ID by user ID: " + e.getMessage());
+        }
+
+        return petSitterId;
+    }
+
+>>>>>>> Stashed changes
     // closes the connection when we are done with it
     public void closeConnection() {
         try {
