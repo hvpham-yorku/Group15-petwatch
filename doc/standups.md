@@ -30,24 +30,24 @@ Sprint 2 Standups - Isha
 
 | Standup Date       | Sprint # | Standup # | Worked on since last standup | Committed to next | Estimated Completion | Any Blockers |
 |--------------------|---------|-----------|-------------------------------|-------------------|----------------------|--------------|
-| 21 March 2025      | 2       | 5       | Made notes for sprint 1 retrospective meeting     | Planning out sprint goals and task distribution as a team       | March 30        |  Working around busy course schedules  |
-| 30 March 2025      | 2        | 6     | Finish and upload SR1.md and sprint2.md, helping with backend  | Working on documentation and pet sitter dashboard updating  | April 1   | Waiting for members to finish tasks before starting  |
-|  3 April 2025      | 2         | 7          |  Working on project documentation, creating demo video  | Finalize project, schedule and prepare for demo with the TA         | April 3           | Scheduling a time that works for every team member     |
+| 21 March 2025      | 2       | 10       | Made notes for sprint 1 retrospective meeting     | Planning out sprint goals and task distribution as a team       | March 30        |  Working around busy course schedules  |
+| 30 March 2025      | 2        | 11     | Finish and upload SR1.md and sprint2.md, helping with backend  | Working on documentation and pet sitter dashboard updating  | April 1   | Waiting for members to finish tasks before starting  |
+|  3 April 2025      | 2         | 12          |  Working on project documentation, creating demo video  | Finalize project, schedule and prepare for demo with the TA         | April 3           | Scheduling a time that works for every team member     |
 
 
 Sprint 2 Standups - Sakshi
 
 | Standup Date       | Sprint # | Standup # | Worked on since last standup | Committed to next | Estimated Completion | Any Blockers |
 |--------------------|---------|-----------|-------------------------------|-------------------|----------------------|--------------|
-|     21 March 2025       | 2           | 5     |    Working on pet owner dashboard                     |     Working on pet owner dashboard          |       29  March 2025   |   Connecting to database         |
-|     30 March 2025      | 2        | 6         |     Finished pet owner dashboard                          |      Working on pet sitter dashboard          |    1  April 2025      |      Connected to database      |
-|        3 April 2025        | 2         | 7        |      Finalizing pet owner and sitter dashboards                         |      Finalize project, schedule and prepare for demo with the TA        |    3 April              |          Scheduling a time that works for every team member         |
+|     21 March 2025       | 2           | 13     |    Working on pet owner dashboard                     |     Working on pet owner dashboard          |       29  March 2025   |   Connecting to database         |
+|     30 March 2025      | 2        | 14         |     Finished pet owner dashboard                          |      Working on pet sitter dashboard          |    1  April 2025      |      Connected to database      |
+|        3 April 2025        | 2         | 15        |      Finalizing pet owner and sitter dashboards                         |      Finalize project, schedule and prepare for demo with the TA        |    3 April              |          Scheduling a time that works for every team member         |
 
 
 Sprint 2 Standups - Arjon
 
 | Standup Date       | Sprint # | Standup # | Worked on since last standup | Committed to next | Estimated Completion | Any Blockers |
 |--------------------|---------|-----------|-------------------------------|-------------------|----------------------|--------------|
-|        21 March 2025    | 2           | 7    |        Determining project requirements                  |      Planning out sprint goals and task distribution as a team        |      24 March 2025     |      Planning a meeting time that works for all team members       |
-|        29 March 2025     | 2        | 8     |      Working on pet owner dashboard             |          Working on frontend backend connection          |     1 April    |    Waiting for team members to finish tasks      |
-|       3 April 2025      | 2         | 9       |     Working on frontend backend connection     |          Finalize project, schedule and prepare for demo with the TA           |         April 3       |             Scheduling a time that works for every team member      |
+|        21 March 2025    | 2           | 16    |        Determining project requirements                  |      Planning out sprint goals and task distribution as a team        |      24 March 2025     |      Planning a meeting time that works for all team members       |
+|        29 March 2025     | 2        | 17     |      Working on pet owner dashboard             |          Working on frontend backend connection          |     1 April    |    Waiting for team members to finish tasks      |
+|       3 April 2025      | 2         | 18       |     Working on frontend backend connection     |          Finalize project, schedule and prepare for demo with the TA           |         April 3       |             Scheduling a time that works for every team member      |
