@@ -35,13 +35,13 @@ public class PetOwnerDAO {
         }
 
         String sql = "INSERT INTO pet_owners (user_id, name, phone, address, country, state, city, postal_code) VALUES (" +
-                petOwner.getUserId() + ", '" + 
-                petOwner.getName() + "', '" + 
-                petOwner.getPhone() + "', '" + 
-                petOwner.getAddress() + "', '" + 
-                petOwner.getCountry() + "', '" + 
-                petOwner.getState() + "', '" + 
-                petOwner.getCity() + "', '" + 
+                petOwner.getUserId() + ", '" +
+                petOwner.getName() + "', '" +
+                petOwner.getPhone() + "', '" +
+                petOwner.getAddress() + "', '" +
+                petOwner.getCountry() + "', '" +
+                petOwner.getState() + "', '" +
+                petOwner.getCity() + "', '" +
                 petOwner.getPostalCode() + "')";
         try {
             statement = connection.createStatement();
@@ -182,8 +182,6 @@ public class PetOwnerDAO {
         return petOwner;
     }
 
-<<<<<<< Updated upstream
-=======
     public void updateAddress(int petOwnerId, String newAddress) {
         String sql = "UPDATE pet_owners SET address = '" + newAddress + "' WHERE id = " + petOwnerId;
         try {
@@ -268,8 +266,12 @@ public class PetOwnerDAO {
         }
     }
 
-     // updates a pet owners details in the database
-    
+    /**
+     * Updates a pet owner's details in the database
+     * 
+     * @param petOwner The updated pet owner object
+     * @return true if update was successful, false otherwise
+     */
     public boolean updatePetOwner(PetOwner petOwner) {
         if (connection == null) {
             System.err.println("Error: Database connection is not available.");
@@ -306,7 +308,6 @@ public class PetOwnerDAO {
         }
     }
 
->>>>>>> Stashed changes
     // closes the connection when we are done with it
     public void closeConnection() {
         try {

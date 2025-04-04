@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sitter Dashboard - PetWatch</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
+        // Add this script to verify DOM elements on page load
         document.addEventListener('DOMContentLoaded', function() {
             console.log("DOM fully loaded");
             console.log("jobRequestsList exists:", !!document.getElementById('jobRequestsList'));
@@ -16,12 +17,13 @@
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <style>
-       
+        /* Fallback for Font Awesome if CDN fails */
         .icon-fallback {
             font-weight: bold;
             margin-right: 5px;
         }
         
+        /* Line clamp utility for truncating text */
         .line-clamp-2 {
             display: -webkit-box;
             -webkit-line-clamp: 2;
@@ -31,67 +33,50 @@
     </style>
 </head>
 <body class="bg-gray-100 min-h-screen flex">
+<!-- Sidebar -->
+<div class="w-64 bg-white shadow-md p-5">
+    <h2 class="text-2xl font-bold flex items-center space-x-2">
+        🐾 PetWatch
+    </h2>
+    <nav class="mt-6">
+        <button id="sitterBtn" class="w-full text-left p-3 bg-green-500 text-white rounded">
+            <i class="fas fa-user-md"></i> Pet Sitter Dashboard
+        </button>
+        <button id="logoutBtn" class="w-full text-left p-3 mt-6 bg-red-500 text-white rounded">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+        <form id="logoutForm" th:action="@{/perform-logout}" method="POST" class="hidden">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+        </form>
+    </nav>
+</div>
 
-    <!-- Sidebar -->
-    <div class="w-64 bg-white shadow-md p-5">
-        <h2 class="text-2xl font-bold flex items-center space-x-2">
-            🐾 PetWatch
-        </h2>
-        <nav class="mt-6">
-            <button id="sitterBtn" class="w-full text-left p-3 bg-green-500 text-white rounded">
-                <i class="fas fa-user-md"></i> Pet Sitter Dashboard
-            </button>
-            <button id="logoutBtn" class="w-full text-left p-3 mt-6 bg-red-500 text-white rounded">
-                <i class="fas fa-sign-out-alt"></i> Logout
-            </button>
-            
-            <!-- Hidden logout form for CSRF protection -->
-            <form id="logoutForm" th:action="@{/perform-logout}" method="POST" class="hidden">
-                <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
-            </form>
-        </nav>
+<!-- Main Content -->
+<div class="flex-1 p-6" id="sitterDashboard">
+    <h2 class="text-3xl font-bold">Your Sitter Profile</h2>
+    <p class="text-gray-600">Update your bio, qualifications, and contact info.</p>
+
+    <div class="bg-white p-6 shadow-lg rounded-lg mt-6">
+        <img id="sitterProfileImg" src="https://via.placeholder.com/80" alt="Profile" class="w-20 h-20 rounded-full mb-2 object-cover" />
+        <h3 class="text-xl font-bold">John Doe</h3>
+        <p class="text-gray-500">Professional Pet Sitter with 5 years of experience.</p>
+        <p class="mt-2 text-sm">
+            <i class="fas fa-phone"></i> Contact: +1 234 567 890, johndoe123@gmail.com
+        </p>
+        <button class="edit-profile-btn mt-4 px-4 py-2 bg-green-500 text-white rounded">Edit Profile</button>
     </div>
 
-    <!-- Main Content -->
-    <div class="flex-1 p-6">
-        <h2 class="text-3xl font-bold">Your Sitter Profile</h2>
-        <p class="text-gray-600">Update your bio, qualifications, and contact info.</p>
-
-        <div class="bg-white p-6 shadow-lg rounded-lg mt-6">
-            <h3 class="text-xl font-bold">👤 John Doe</h3>
-            <p class="text-gray-500">Professional Pet Sitter with 5 years of experience.</p>
-            <p class="mt-2 text-sm"><i class="fas fa-phone"></i> Contact: +1 234 567 890</p>
-            <button class="mt-4 px-4 py-2 bg-green-500 text-white rounded">Edit Profile</button>
+    <div class="grid grid-cols-2 gap-4 mt-6">
+        <div class="bg-blue-100 p-4 rounded-lg">
+            <h3 class="text-xl font-bold">🐶 20+</h3>
+            <p class="text-gray-600">Pets Taken Care Of</p>
         </div>
-
-        <!-- Sitter Stats -->
-        <div class="grid grid-cols-2 gap-4 mt-6">
-            <div class="bg-blue-100 p-4 rounded-lg">
-                <h3 class="text-xl font-bold">🐶 20+</h3>
-                <p class="text-gray-600">Pets Taken Care Of</p>
-            </div>
-            <div class="bg-green-100 p-4 rounded-lg">
-                <h3 class="text-xl font-bold">⭐ 4.8</h3>
-                <p class="text-gray-600">Average Rating</p>
-            </div>
+        <div class="bg-green-100 p-4 rounded-lg">
+            <h3 class="text-xl font-bold">⭐ 4.8</h3>
+            <p class="text-gray-600">Average Rating</p>
         </div>
-
-        <!-- Job Requests -->
-        <h3 class="text-2xl font-bold mt-8">Pet Sitting Requests</h3>
-        <p class="text-gray-600">Accept or decline job requests from pet owners.</p>
-        <ul id="request-list" class="mt-4">
-            <li class="bg-white p-4 shadow rounded-lg mb-2">
-                <p class="font-bold">Owner: Alice Johnson</p>
-                <p class="text-gray-600">Golden Retriever - 3 days</p>
-                <button class="mt-2 px-4 py-2 bg-blue-500 text-white rounded">Accept</button>
-                <button class="mt-2 px-4 py-2 bg-red-500 text-white rounded">Decline</button>
-            </li>
-        </ul>
     </div>
 
-<<<<<<< Updated upstream
-    <script src="/js/dashboard.js"></script>
-=======
     <!-- Pet Sitting Requests Container -->
     <div class="bg-white p-6 rounded-lg shadow-md mb-6">
         <h2 class="text-xl font-semibold mb-4">Pet Sitting Requests</h2>
@@ -141,6 +126,6 @@
 </div>
 
 <script src="/js/dashboard.js"></script>
->>>>>>> Stashed changes
 </body>
 </html>
+

@@ -18,14 +18,20 @@ public class SQLiteConfig {
         try (Connection conn = DriverManager.getConnection(URL);
              Statement stmt = conn.createStatement()) {
             
+            // Set pragmas for better concurrency handling
             
-            // fix database lock issue 
+            // Enable WAL (Write-Ahead Logging) mode
+            // This allows readers to continue reading while writers are writing
             stmt.execute("PRAGMA journal_mode = WAL;");
             
+            // Set synchronous mode to NORMAL for better performance while maintaining safety
             stmt.execute("PRAGMA synchronous = NORMAL;");
             
+            // Set busy timeout to 5 seconds (5000 ms)
+            // When database is locked, SQLite will wait this long before failing
             stmt.execute("PRAGMA busy_timeout = 5000;");
             
+            // Allow concurrent readers
             stmt.execute("PRAGMA read_uncommitted = 1;");
             
             System.out.println("SQLite configured for concurrent operation");

@@ -5,7 +5,7 @@ import java.util.Date;
 public class Job {
     private int id;
     private int petOwnerId;
-    private Integer petSitterId; 
+    private Integer petSitterId; // Can be null if not assigned
     private String petType;
     private String priority;
     private Date startDate;
@@ -20,7 +20,7 @@ public class Job {
     public Job() {
     }
 
-    // constructor for creating new jobs
+    // Constructor without ID (for creating new jobs)
     public Job(int petOwnerId, String petType, String priority, Date startDate, Date endDate, 
                String description, String notes, double payRate, String paymentMethod) {
         this.petOwnerId = petOwnerId;

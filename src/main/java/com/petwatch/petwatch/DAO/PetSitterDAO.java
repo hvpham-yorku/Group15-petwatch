@@ -36,12 +36,12 @@ public class PetSitterDAO {
         }
 
         String sql = "INSERT INTO pet_sitters (user_id, name, experience, availability, city, bio, phone) VALUES (" +
-                petSitter.getUserId() + ", '" + 
-                petSitter.getName() + "', '" + 
-                petSitter.getExperience() + "', '" + 
-                petSitter.getAvailability() + "', '" + 
-                petSitter.getCity() + "', '" + 
-                petSitter.getBio() + "', '" + 
+                petSitter.getUserId() + ", '" +
+                petSitter.getName() + "', '" +
+                petSitter.getExperience() + "', '" +
+                petSitter.getAvailability() + "', '" +
+                petSitter.getCity() + "', '" +
+                petSitter.getBio() + "', '" +
                 petSitter.getPhone() + "')";
 
         try {
@@ -184,8 +184,6 @@ public class PetSitterDAO {
         return petSitter;
     }
 
-<<<<<<< Updated upstream
-=======
     public void updatePetSitter(PetSitter petSitter) {
         if (connection == null) {
             System.err.println("Error: Database connection is not available.");
@@ -303,8 +301,12 @@ public class PetSitterDAO {
         }
     }
 
-    
-    
+    /**
+     * Gets a pet sitter ID by user ID
+     *
+     * @param userId The user ID to search for
+     * @return pet sitter ID or -1 if not found
+     */
     public int getPetSitterIdByUserId(int userId) {
         if (connection == null) {
             System.err.println("Error: Database connection is not available.");
@@ -330,7 +332,6 @@ public class PetSitterDAO {
         return petSitterId;
     }
 
->>>>>>> Stashed changes
     // closes the connection when we are done with it
     public void closeConnection() {
         try {

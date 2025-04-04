@@ -77,7 +77,7 @@ public class JobDAO {
                 
                 // Set pragma to reduce locking
                 try (Statement pragmaStmt = conn.createStatement()) {
-                    pragmaStmt.execute("PRAGMA busy_timeout = 5000;"); 
+                    pragmaStmt.execute("PRAGMA busy_timeout = 5000;");  // 5 second timeout
                 }
                 
                 pstmt.setInt(1, job.getPetOwnerId());
@@ -102,16 +102,18 @@ public class JobDAO {
                     try (ResultSet rs = pstmt.getGeneratedKeys()) {
                         if (rs.next()) {
                             jobId = rs.getInt(1);
-                            return jobId;  
+                            return jobId;  // Success! Return and exit the method
                         }
                     }
                 }
             } catch (SQLException e) {
+                // Check if this is a database lock error
                 if (e.getMessage().contains(SQLITE_BUSY)) {
                     retries++;
                     System.out.println("Database locked, retry attempt " + retries + " of " + MAX_RETRIES);
                     
                     if (retries < MAX_RETRIES) {
+                        // Exponential backoff with jitter
                         long backoffMs = (long) Math.min(1000 * Math.pow(2, retries), 8000) 
                                        + random.nextInt(1000);
                         try {
@@ -119,10 +121,11 @@ public class JobDAO {
                             Thread.sleep(backoffMs);
                         } catch (InterruptedException ie) {
                             Thread.currentThread().interrupt();
-                            break;  
+                            break;  // Exit the retry loop if interrupted
                         }
                     }
                 } else {
+                    // Different error, just log and return error
                     System.out.println("Error adding job: " + e.getMessage());
                     return -1;
                 }
@@ -193,8 +196,9 @@ public class JobDAO {
             try (Connection conn = getConnection();
                  Statement stmt = conn.createStatement()) {
                 
+                // Set pragma to reduce locking
                 try (Statement pragmaStmt = conn.createStatement()) {
-                    pragmaStmt.execute("PRAGMA busy_timeout = 5000;");  
+                    pragmaStmt.execute("PRAGMA busy_timeout = 5000;");  // 5 second timeout
                 }
                 
                 System.out.println("JobDAO: Executing query for open jobs: " + sql);
@@ -228,15 +232,15 @@ public class JobDAO {
                     }
                     System.out.println("JobDAO: Query returned " + count + " open jobs");
                 }
-                success = true; 
+                success = true;  // Successfully retrieved jobs
             } catch (SQLException e) {
-                // heck if database lock error
+                // Check if this is a database lock error
                 if (e.getMessage().contains(SQLITE_BUSY)) {
                     retries++;
                     System.out.println("Database locked during getOpenJobs, retry attempt " + retries + " of " + MAX_RETRIES);
                     
                     if (retries < MAX_RETRIES) {
-                        
+                        // Exponential backoff with jitter
                         long backoffMs = (long) Math.min(1000 * Math.pow(2, retries), 8000) 
                                        + random.nextInt(1000);
                         try {
@@ -244,11 +248,11 @@ public class JobDAO {
                             Thread.sleep(backoffMs);
                         } catch (InterruptedException ie) {
                             Thread.currentThread().interrupt();
-                            break;  
+                            break;  // Exit the retry loop if interrupted
                         }
                     }
                 } else {
-               
+                    // Different error, just log and continue
                     System.out.println("Error getting open jobs: " + e.getMessage());
                     break;
                 }
@@ -317,6 +321,7 @@ public class JobDAO {
             try (Connection conn = getConnection();
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 
+                // Set pragma to reduce locking
                 try (Statement pragmaStmt = conn.createStatement()) {
                     pragmaStmt.execute("PRAGMA busy_timeout = 5000;");  // 5 second timeout
                 }
@@ -343,14 +348,16 @@ public class JobDAO {
                 int affectedRows = pstmt.executeUpdate();
                 success = affectedRows > 0;
                 if (success) {
-                    return true;  
+                    return true;  // Success! Return and exit the method
                 }
             } catch (SQLException e) {
+                // Check if this is a database lock error
                 if (e.getMessage().contains(SQLITE_BUSY)) {
                     retries++;
                     System.out.println("Database locked, retry attempt " + retries + " of " + MAX_RETRIES);
                     
                     if (retries < MAX_RETRIES) {
+                        // Exponential backoff with jitter
                         long backoffMs = (long) Math.min(1000 * Math.pow(2, retries), 8000) 
                                        + random.nextInt(1000);
                         try {
@@ -358,10 +365,11 @@ public class JobDAO {
                             Thread.sleep(backoffMs);
                         } catch (InterruptedException ie) {
                             Thread.currentThread().interrupt();
-                            break;  
+                            break;  // Exit the retry loop if interrupted
                         }
                     }
                 } else {
+                    // Different error, just log and return error
                     System.out.println("Error updating job: " + e.getMessage());
                     return false;
                 }
@@ -469,9 +477,9 @@ public class JobDAO {
             try (Connection conn = getConnection();
                  PreparedStatement pstmt = conn.prepareStatement(sql)) {
                 
-               
+                // Set pragma to reduce locking
                 try (Statement pragmaStmt = conn.createStatement()) {
-                    pragmaStmt.execute("PRAGMA busy_timeout = 5000;"); 
+                    pragmaStmt.execute("PRAGMA busy_timeout = 5000;");  // 5 second timeout
                 }
                 
                 pstmt.setInt(1, id);
@@ -479,15 +487,16 @@ public class JobDAO {
                 int affectedRows = pstmt.executeUpdate();
                 success = affectedRows > 0;
                 if (success) {
-                    return true;  
+                    return true;  // Success! Return and exit the method
                 }
             } catch (SQLException e) {
-                
+                // Check if this is a database lock error
                 if (e.getMessage().contains(SQLITE_BUSY)) {
                     retries++;
                     System.out.println("Database locked, retry attempt " + retries + " of " + MAX_RETRIES);
                     
                     if (retries < MAX_RETRIES) {
+                        // Exponential backoff with jitter
                         long backoffMs = (long) Math.min(1000 * Math.pow(2, retries), 8000) 
                                        + random.nextInt(1000);
                         try {
@@ -495,11 +504,11 @@ public class JobDAO {
                             Thread.sleep(backoffMs);
                         } catch (InterruptedException ie) {
                             Thread.currentThread().interrupt();
-                            break;  
+                            break;  // Exit the retry loop if interrupted
                         }
                     }
                 } else {
-                    
+                    // Different error, just log and return error
                     System.out.println("Error deleting job: " + e.getMessage());
                     return false;
                 }
@@ -513,7 +522,7 @@ public class JobDAO {
         return success;
     }
     
-    //close connection
+    // Close the database connection
     public void closeConnection() {
         try {
             if (conn != null && !conn.isClosed()) {

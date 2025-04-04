@@ -229,80 +229,94 @@ public class ApiController {
             @RequestParam String email,
             @RequestBody Map<String, Object> petData) {
         
-        int petId = -1;
+        System.out.println("Received request to save pet: " + petData);
+        
+        // Get user by email
+        User user = userDAO.getUserByEmail(email);
+        if (user == null) {
+            return ResponseEntity.badRequest().body(Map.of(
+                "status", "error", 
+                "message", "User not found"
+            ));
+        }
+        
+        // Check if user has a pet_owner record, create one if not
+        int petOwnerId = userDAO.getPetOwnerIdForUser(user.getId());
+        if (petOwnerId == -1) {
+            // Create a pet_owner record for this user
+            petOwnerId = userDAO.createPetOwnerForUser(user.getId(), user.getEmail(), "555-555-5555", "123 Main St");
+            if (petOwnerId == -1) {
+                return ResponseEntity.badRequest().body(Map.of(
+                    "status", "error",
+                    "message", "Failed to create pet owner profile"
+                ));
+            }
+            System.out.println("Created pet owner profile with ID: " + petOwnerId + " for user ID: " + user.getId());
+        }
+        
+        // Get the pet type from request
+        String petTypeStr = (String) petData.get("type");
+        Pet.PetType petType;
+        try {
+            petType = Pet.PetType.valueOf(petTypeStr.toUpperCase());
+        } catch (Exception e) {
+            petType = Pet.PetType.OTHER;
+        }
+        
+        // Extract name and age if provided, otherwise use defaults
+        String petName = petData.containsKey("name") ? (String) petData.get("name") : "Pet";
+        int petAge = 1;
+        if (petData.containsKey("age")) {
+            Object ageObj = petData.get("age");
+            if (ageObj instanceof Number) {
+                petAge = ((Number) ageObj).intValue();
+            } else if (ageObj instanceof String) {
+                try {
+                    petAge = Integer.parseInt((String) ageObj);
+                } catch (NumberFormatException e) {
+                    // Use default age
+                }
+            }
+        }
+        
+        // Parse pet ID if provided
+        Object petIdObj = petData.get("id");
+        Integer petId = null;
+        
+        if (petIdObj != null) {
+            try {
+                if (petIdObj instanceof String) {
+                    String petIdStr = (String) petIdObj;
+                    if (!petIdStr.isEmpty()) {
+                        petId = Integer.parseInt(petIdStr);
+                    }
+                } else if (petIdObj instanceof Number) {
+                    petId = ((Number) petIdObj).intValue();
+                }
+            } catch (NumberFormatException e) {
+                System.err.println("Error parsing pet ID: " + e.getMessage());
+            }
+        }
+        
+        // Create or update pet
         Pet updatedPet = null;
         boolean success = false;
         
-        try {
-            // Get user ID from email
-            User user = userDAO.getUserByEmail(email);
-            if (user == null) {
-                return ResponseEntity.badRequest().body(Map.of(
-                    "status", "error",
-                    "message", "User not found"
-                ));
-            }
+        if (petId != null && petId > 0) {
+            // Try to update existing pet
+            updatedPet = petDAO.getPetById(petId);
             
-            // Get pet owner ID from user ID
-            int petOwnerId = userDAO.getPetOwnerIdForUser(user.getId());
-            if (petOwnerId == -1) {
-                System.out.println("No pet owner found for user ID: " + user.getId());
-                return ResponseEntity.badRequest().body(Map.of(
-                    "status", "error", 
-                    "message", "Pet owner not found"
-                ));
-            }
-            
-            // Parse pet data
-            String type = (String) petData.get("type");
-            String name = (String) petData.get("name");
-            Integer age = null;
-            if (petData.get("age") != null) {
-                age = ((Number) petData.get("age")).intValue();
-            }
-            
-            Pet.PetType petType;
-            try {
-                petType = Pet.PetType.valueOf(type.toUpperCase());
-            } catch (IllegalArgumentException e) {
-                return ResponseEntity.badRequest().body(Map.of(
-                    "status", "error",
-                    "message", "Invalid pet type"
-                ));
-            }
-            
-            // Check if this is an update (petData contains an ID)
-            if (petData.containsKey("id") && petData.get("id") != null) {
-                int id;
-                if (petData.get("id") instanceof Number) {
-                    id = ((Number) petData.get("id")).intValue();
-                } else {
-                    id = Integer.parseInt(petData.get("id").toString());
-                }
+            if (updatedPet != null) {
+                // Update pet details
+                updatedPet.setType(petType);
+                updatedPet.setPetName(petName);
+                updatedPet.setPetAge(petAge);
+                updatedPet.setPetOwnerId(petOwnerId); // Use pet_owner_id instead of user_id
                 
-                System.out.println("Received request to save pet: " + petData);
-                
-                // Update existing pet
-                Pet existingPet = petDAO.getPetById(id);
-                if (existingPet == null) {
-                    return ResponseEntity.badRequest().body(Map.of(
-                        "status", "error",
-                        "message", "Pet not found"
-                    ));
-                }
-                
-                existingPet.setType(petType);
-                existingPet.setPetName(name);
-                if (age != null) {
-                    existingPet.setPetAge(age);
-                }
-                
-                success = petDAO.updatePet(existingPet);
-                updatedPet = existingPet;
-                
+                // Perform the database update
+                success = petDAO.updatePet(updatedPet);
                 if (success) {
-                    System.out.println("Pet updated successfully with ID: " + id);
-                    System.out.println("Updated pet with ID: " + id);
+                    System.out.println("Updated pet with ID: " + petId);
                 } else {
                     return ResponseEntity.badRequest().body(Map.of(
                         "status", "error",
@@ -310,9 +324,9 @@ public class ApiController {
                     ));
                 }
             } else {
-                // Create new pet
-                System.out.println("Creating new pet for pet owner ID: " + petOwnerId);
-                updatedPet = new Pet(name, age != null ? age : 0, petType, petOwnerId);
+                // Pet ID was provided but not found, create new
+                System.out.println("Pet with ID " + petId + " not found. Creating new pet.");
+                updatedPet = new Pet(petName, petAge, petType, petOwnerId); // Use pet_owner_id instead of user_id
                 int newPetId = petDAO.addPet(updatedPet);
                 
                 if (newPetId > 0) {
@@ -325,31 +339,38 @@ public class ApiController {
                     ));
                 }
             }
+        } else {
+            // Create new pet
+            System.out.println("Creating new pet for pet owner ID: " + petOwnerId);
+            updatedPet = new Pet(petName, petAge, petType, petOwnerId); // Use pet_owner_id instead of user_id
+            int newPetId = petDAO.addPet(updatedPet);
             
-            // Return response with pet data
-            Map<String, Object> response = new HashMap<>();
-            response.put("status", "success");
-            response.put("message", "Pet saved successfully");
-            
-            if (updatedPet != null) {
-                Map<String, Object> petInfo = new HashMap<>();
-                petInfo.put("id", String.valueOf(updatedPet.getPetId()));
-                petInfo.put("type", updatedPet.getType().toString());
-                petInfo.put("name", updatedPet.getPetName());
-                petInfo.put("age", updatedPet.getPetAge());
-                
-                response.put("pet", petInfo);
+            if (newPetId > 0) {
+                success = true;
+                System.out.println("Created new pet with ID: " + newPetId);
+            } else {
+                return ResponseEntity.badRequest().body(Map.of(
+                    "status", "error",
+                    "message", "Failed to create pet in database"
+                ));
             }
-            
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            System.err.println("Error saving pet: " + e.getMessage());
-            e.printStackTrace();
-            return ResponseEntity.status(500).body(Map.of(
-                "status", "error",
-                "message", "Server error: " + e.getMessage()
+        }
+        
+        // Return response with pet data
+        Map<String, Object> response = new HashMap<>();
+        response.put("status", "success");
+        response.put("message", "Pet saved successfully");
+        
+        if (updatedPet != null) {
+            response.put("pet", Map.of(
+                "id", String.valueOf(updatedPet.getPetId()),
+                "type", updatedPet.getType().toString(),
+                "name", updatedPet.getPetName(),
+                "age", updatedPet.getPetAge()
             ));
         }
+        
+        return ResponseEntity.ok(response);
     }
     
     @DeleteMapping("/pets/{petId}")
