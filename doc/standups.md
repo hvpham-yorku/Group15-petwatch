@@ -31,5 +31,5 @@ Sprint 2 Standups - Isha
 | Standup Date       | Sprint # | Standup # | Worked on since last standup | Committed to next | Estimated Completion | Any Blockers |
 |--------------------|---------|-----------|-------------------------------|-------------------|----------------------|--------------|
 | 21 March 2025      | 2       | 7       | Made notes for sprint 1 retrospective meeting     | Planning out sprint goals and task distribution as a team       | March 30        |  Working around busy course schedules  |
-| 30 March 2025      | 2        | 8      | Finish and upload SR1.md and sprint2.md, helping with backend  | Working on documentation and pet sitter dashboard updating  | April 3   | Waiting for members to finish tasks before starting  |
+| 30 March 2025      | 2        | 8      | Finish and upload SR1.md and sprint2.md, helping with backend  | Working on documentation and pet sitter dashboard updating  | April 1   | Waiting for members to finish tasks before starting  |
 |  3 April 2025      | 2         | 9           |  Working on project documentation, creating demo video  | Finalize project, schedule and prepare for demo with the TA         | April 3           | Scheduling a time that works for every team member     |
